@@ -66,16 +66,16 @@
       <GridPane.margin>
          <Insets right="10.0" />
       </GridPane.margin>
-         <Image url="@../../../images/logo_transparent_background.png" />
+         <Image url="@../images/logo_transparent_background.png" />
    </ImageView>
    <ImageView fitHeight="30.0" fitWidth="60.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="5" GridPane.vgrow="ALWAYS">
-         <Image url="@../../../images/password3.png" />
+         <Image url="@../images/password3.png" />
       <GridPane.margin>
          <Insets left="10.0" />
       </GridPane.margin>
    </ImageView>
    <ImageView fitHeight="30.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
-         <Image url="@../../../images/username3.png" />
+         <Image url="@../images/username3.png" />
       <GridPane.margin>
          <Insets left="10.0" />
       </GridPane.margin></ImageView>

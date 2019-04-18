@@ -12,7 +12,7 @@ public class Display extends Application {
     public void start(Stage primaryStage) throws Exception{
 
         Parent root = FXMLLoader.load(getClass().getResource("/fxml/loginScreenUI.fxml"));
-        Scene scene = new Scene(root, 500, 300);
+        Scene scene = new Scene(root, 1100, 600);
         primaryStage.setTitle("Owl Library");
 
         primaryStage.setScene(scene);
