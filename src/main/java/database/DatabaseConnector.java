@@ -13,7 +13,7 @@ public class DatabaseConnector {
 
     public static Connection getConnection(){
         try {
-            String driver = "com.mysql.jdbc.Driver";
+            String driver = "com.mysql.cj.jdbc.Driver";
             Class.forName(driver);
             // create a connection to the database
             return DriverManager.getConnection(url, user, password);

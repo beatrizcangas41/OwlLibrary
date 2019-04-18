@@ -6,7 +6,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 
@@ -76,8 +78,8 @@ public class loginScreenController {
                         System.out.println("Admin Page");
 
                         try {
-                            Object page = FXMLLoader.load(loginScreenController.class.getResource("fxml/AdminMainScreenUI.fxml"));
-                            Scene newScene = new Scene((Parent) page);
+                            Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AdminMainScreenUI.fxml"));
+                            Scene newScene = new Scene((Parent) page, 500, 500);
 
                             Stage newStage = new Stage();
                             newStage.setScene(newScene);
@@ -99,7 +101,7 @@ public class loginScreenController {
                         try {
 
                             Object page = FXMLLoader.load(loginScreenController.class.getResource("fxml/UserMainScreenUI.fxml"));
-                            Scene newScene = new Scene((Parent) page);
+                            Scene newScene = new Scene((Parent) page, 500, 500);
 
                             Stage newStage = new Stage();
                             newStage.setScene(newScene);
