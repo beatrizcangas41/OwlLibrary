@@ -13,20 +13,21 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<GridPane alignment="center" cache="true" cacheHint="QUALITY" hgap="5.0" style="-fx-border-color: #ffcc99; -fx-background-color: radial-gradient(center 50% 50% , radius 180%, #ffece6, #8cd1d1);" vgap="5.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AccountScreenController">
+<GridPane alignment="center" cache="true" cacheHint="QUALITY" hgap="5.0" style="-fx-border-color: #ffcc99;           -fx-background-color: radial-gradient(center 50% 50% , radius 180%, #ffece6, #8cd1d1);" vgap="5.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AccountScreenController">
 
     <rowConstraints>
         <RowConstraints minHeight="10.0" prefHeight="30.0" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" />
         <RowConstraints minHeight="10.0" prefHeight="30.0" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="10.0" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="10.0" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="10.0" />
+      <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" />
       <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="10.0" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" />
-        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="10.0" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" />
-        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="10.0" />
-        <RowConstraints minHeight="10.0" prefHeight="30.0" />
-        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="10.0" />
         <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="32.0" />
         <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="10.0" />
         <RowConstraints maxHeight="32.0" minHeight="10.0" prefHeight="32.0" />
@@ -49,7 +50,7 @@
         <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
         <ColumnConstraints />
     </columnConstraints>
-    <ImageView fitHeight="54.0" fitWidth="165.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+    <ImageView fitHeight="54.0" fitWidth="165.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="6" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
         <GridPane.margin>
             <Insets left="30.0" />
         </GridPane.margin>
@@ -58,7 +59,7 @@
             <Reflection fraction="0.5" topOffset="-10.0" />
         </effect>
     </ImageView>
-    <ImageView fitHeight="35.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="3" GridPane.valignment="CENTER">
+    <ImageView fitHeight="35.0" fitWidth="43.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
         <GridPane.margin>
             <Insets right="7.0" />
         </GridPane.margin>
@@ -67,7 +68,7 @@
         </effect>
         <Image url="@../images/images.png" />
     </ImageView>
-    <ImageView fitHeight="33.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="5" GridPane.valignment="CENTER">
+    <ImageView fitHeight="33.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="6" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
         <GridPane.margin>
             <Insets right="8.0" />
         </GridPane.margin>
@@ -76,7 +77,7 @@
         </effect>
         <Image url="@../images/mail-icon-2.png" />
     </ImageView>
-    <ImageView fitHeight="30.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="9" GridPane.valignment="CENTER">
+    <ImageView fitHeight="30.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="10" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
         <Image url="@../images/username3.png" />
         <GridPane.margin>
             <Insets right="10.0" />
@@ -84,7 +85,7 @@
         <effect>
             <ColorAdjust brightness="-0.02" contrast="-0.05" hue="0.13" saturation="0.1" />
         </effect></ImageView>
-    <ImageView fitHeight="30.0" fitWidth="60.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="11" GridPane.valignment="CENTER">
+    <ImageView fitHeight="30.0" fitWidth="60.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="12" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
         <Image url="@../images/password3.png" />
         <GridPane.margin>
             <Insets right="10.0" />
@@ -93,7 +94,7 @@
             <ColorAdjust brightness="-0.02" contrast="-0.05" hue="0.13" saturation="0.1" />
         </effect>
     </ImageView>
-    <ImageView fitHeight="30.0" fitWidth="60.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="13" GridPane.valignment="CENTER">
+    <ImageView fitHeight="30.0" fitWidth="60.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="14" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
         <effect>
             <ColorAdjust brightness="-0.02" contrast="-0.05" hue="0.13" saturation="0.1" />
         </effect>
@@ -103,32 +104,25 @@
         <Image url="@../images/password3.png" />
     </ImageView>
 
-
-
-
-    <TextField fx:id="nameTextField1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" promptText="name" style="-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="3" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+    <TextField fx:id="nameTextField1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" promptText="name" style="-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
         <GridPane.margin>
             <Insets right="80.0" />
         </GridPane.margin>
         <cursor>
             <Cursor fx:constant="HAND" />
         </cursor></TextField>
-    <TextField fx:id="emailTextField1" accessibleRole="TEXT_FIELD" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" promptText="email address" style="-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="5" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+    <TextField fx:id="emailTextField1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" promptText="email address" style="-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="6" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
         <GridPane.margin>
             <Insets right="80.0" />
         </GridPane.margin>
         <cursor>
             <Cursor fx:constant="HAND" />
         </cursor></TextField>
-   <TextField fx:id="emailTextField2" accessibleRole="TEXT_FIELD" layoutX="221.0" layoutY="201.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" promptText="email address confirmation" style="-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.rowIndex="7">
-      <cursor>
-         <Cursor fx:constant="HAND" />
-      </cursor>
+   <TextField fx:id="emailTextField2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="email address confirmation" style="-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="8" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
       <GridPane.margin>
          <Insets right="80.0" />
-      </GridPane.margin>
-   </TextField>
-    <TextField fx:id="usernameTextField1" accessibleRole="TEXT_FIELD" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="309.0" promptText="username" style="-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.rowIndex="9">
+      </GridPane.margin></TextField>
+    <TextField fx:id="usernameTextField1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" promptText="username" style="-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="10" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
         <GridPane.margin>
             <Insets right="80.0" />
         </GridPane.margin>
@@ -136,7 +130,7 @@
             <Cursor fx:constant="HAND" />
         </cursor>
     </TextField>
-    <TextField fx:id="passwordField1" accessibleRole="TEXT_FIELD" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="309.0" promptText="password" style="-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.rowIndex="11">
+    <TextField fx:id="passwordField1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" promptText="password" style="-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="12" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
         <GridPane.margin>
             <Insets right="80.0" />
         </GridPane.margin>
@@ -144,7 +138,7 @@
             <Cursor fx:constant="HAND" />
         </cursor>
     </TextField>
-    <TextField fx:id="passwordField2" accessibleRole="TEXT_FIELD" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" prefHeight="30.0" prefWidth="309.0" promptText="password confirmation" style="-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.rowIndex="13">
+    <TextField fx:id="passwordField2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" promptText="password confirmation" style="-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" GridPane.columnIndex="2" GridPane.columnSpan="5" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="14" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
         <GridPane.margin>
             <Insets right="80.0" />
         </GridPane.margin>
@@ -152,7 +146,7 @@
             <Cursor fx:constant="HAND" />
         </cursor>
     </TextField>
-    <Button fx:id="createAccountPressed" cache="true" cacheHint="QUALITY" defaultButton="true" graphicTextGap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#createAccountPressed" prefWidth="155.0" style="-fx-background-color: #f49271;             -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" text="CREATE  ACCOUNT" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="16" GridPane.rowSpan="2" GridPane.valignment="CENTER">
+    <Button fx:id="createAccountPressed" cache="true" cacheHint="QUALITY" defaultButton="true" graphicTextGap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#createAccountPressed" prefWidth="155.0" style="-fx-background-color: #f49271;             -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" text="CREATE  ACCOUNT" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" GridPane.columnIndex="1" GridPane.columnSpan="3" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="17" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
         <font>
             <Font name="Segoe UI Bold" size="18.0" />
         </font>
@@ -163,7 +157,7 @@
             <Insets bottom="15.0" left="10.0" right="50.0" top="15.0" />
         </GridPane.margin>
     </Button>
-    <Button fx:id="cancelButtonPressed" cache="true" cacheHint="QUALITY" graphicTextGap="5.0" layoutX="126.0" layoutY="453.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#cancelButtonPressed" prefWidth="155.0" style="-fx-background-color: #008080; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" text="CANCEL" textAlignment="CENTER" textFill="#f8f6f6" textOverrun="CENTER_ELLIPSIS" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.rowIndex="16" GridPane.rowSpan="2">
+    <Button fx:id="cancelButtonPressed" cache="true" cacheHint="QUALITY" graphicTextGap="5.0" layoutX="126.0" layoutY="453.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#cancelButtonPressed" prefWidth="155.0" style="-fx-background-color: #008080; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" text="CANCEL" textAlignment="CENTER" textFill="#f8f6f6" textOverrun="CENTER_ELLIPSIS" GridPane.columnIndex="4" GridPane.columnSpan="3" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="17" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
         <font>
             <Font name="Segoe UI Bold" size="18.0" />
         </font>
@@ -174,13 +168,13 @@
             <Insets bottom="15.0" left="50.0" right="10.0" top="15.0" />
         </GridPane.margin>
     </Button>
-   <ImageView fitHeight="33.0" fitWidth="36.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="7" GridPane.valignment="CENTER">
-      <image>
-         <Image url="@../images/mail-icon-2.png" />
-      </image>
+   <ImageView fitHeight="33.0" fitWidth="36.0" layoutX="175.0" layoutY="200.0" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.hgrow="NEVER" GridPane.rowIndex="8" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
       <effect>
          <ColorAdjust contrast="0.2" saturation="-0.12" />
       </effect>
+      <image>
+         <Image url="@../images/mail-icon-2.png" />
+      </image>
       <GridPane.margin>
          <Insets right="8.0" />
       </GridPane.margin>

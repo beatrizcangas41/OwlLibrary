@@ -1,3 +1,4 @@
+
 package Controllers;
 
 import database.DatabaseConnector;
@@ -20,8 +21,7 @@ import java.sql.Statement;
 @SuppressWarnings("Duplicates")
 public class AccountScreenController {
 
-    @FXML
-    public Button createAccountPressed, cancelButtonPressed;
+    @FXML private Button createAccountPressed, cancelButtonPressed;
 
     @FXML private TextField nameTextField1;
     @FXML private TextField emailTextField1, emailTextField2;
@@ -49,84 +49,82 @@ public class AccountScreenController {
             String pwrd1 = passwordField1.getText();
             String pwrd2 = passwordField2.getText();
 
-            String query3 = "SELECT *" + "FROM user WHERE username is not null AND email is not null AND " +
-                    "password is not null AND name is not null";
-            ResultSet results3 = stmt2.executeQuery(query3);
-
-            if (results3.first() || !email1.equals(email2) || !pwrd1.equals(pwrd2)) {
+            if (name1.isEmpty() || email1.isEmpty() || email2.isEmpty() || uName1.isEmpty() || pwrd1.isEmpty() || pwrd2.isEmpty()) {
+                System.out.println("missing credentials");
 
                 Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                 errorAlert.setHeaderText("Input not valid");
-                errorAlert.setContentText("Please verify your inputs. Something went wrong.");
+                errorAlert.setContentText("Something went wrong. Please verify your input(s), they may be empty. ");
                 errorAlert.showAndWait();
+            }
 
+            else if (!name1.isEmpty() || !email1.isEmpty() || !email2.isEmpty() || !uName1.isEmpty() || !pwrd1.isEmpty() || !pwrd2.isEmpty()) {
+
+                System.out.println("Printing : " + uName1 + "" + email1 +" " + name1 + " " + pwrd1);
+                String query3 = "SELECT *" + "FROM user WHERE username is not null AND email is not null AND " +
+                        "password is not null AND name is not null";
+
+                ResultSet results3 = stmt2.executeQuery(query3);
 
                 if (!email1.equals(email2)) {
-                    errorAlert = new Alert(Alert.AlertType.ERROR);
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                     errorAlert.setHeaderText("Input not valid");
                     errorAlert.setContentText("Email address is not a match. Please try again. ");
                     errorAlert.showAndWait();
                 }
 
                 else if (!pwrd1.equals(pwrd2)) {
-                    errorAlert = new Alert(Alert.AlertType.ERROR);
+                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                     errorAlert.setHeaderText("Input not valid");
                     errorAlert.setContentText("Password is not a match. Please try again. ");
                     errorAlert.showAndWait();
                 }
 
-                else if (name1 == null) {
-                    errorAlert = new Alert(Alert.AlertType.ERROR);
-                    errorAlert.setHeaderText("Input not valid");
-                    errorAlert.setContentText("Maybe your 'name' is missing. Please try again. ");
-                    errorAlert.showAndWait();
-                }
-
-                String query5 = "SELECT username FROM user WHERE username = '" + uName1 + "'";
-                ResultSet results5 = stmt2.executeQuery(query5);
-
-                if (results5.first()) {
-                    errorAlert = new Alert(Alert.AlertType.ERROR);
-                    errorAlert.setHeaderText("Input not valid");
-                    errorAlert.setContentText("Username already taken. Please try again. ");
-                    errorAlert.showAndWait();
-                }
-
                 else {
-                    String query4 = "SELECT email FROM user WHERE email = '" + email1 + "'";
-                    ResultSet results4 = stmt2.executeQuery(query4);
+                    String query5 = "SELECT username FROM user WHERE username = '" + uName1 + "'";
+                    ResultSet results5 = stmt2.executeQuery(query5);
 
-                    if (results4.first()) {
-                        errorAlert = new Alert(Alert.AlertType.ERROR);
+                    if (results5.first()) {
+                        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                         errorAlert.setHeaderText("Input not valid");
-                        errorAlert.setContentText("Email already taken. Please try again. ");
+                        errorAlert.setContentText("Username already taken. Please try again. ");
                         errorAlert.showAndWait();
                     }
-                }
 
-                if (!results3.first()) {
-                    System.out.println("There were some entries. ");
+                    else {
+                        String query4 = "SELECT email FROM user WHERE email = '" + email1 + "'";
+                        ResultSet results4 = stmt2.executeQuery(query4);
 
-                    Statement s = connection.createStatement();
-                    s.executeUpdate("INSERT INTO `user`(email, name, username, password)" +
-                            " VALUE ('" + email1 + "' , '" + name1 + "', '" + uName1 + "', '" + pwrd1 + "')");
+                        if (results4.first()) {
+                            Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                            errorAlert.setHeaderText("Input not valid");
+                            errorAlert.setContentText("Email already taken. Please try again. ");
+                            errorAlert.showAndWait();
+                        }
 
-                    System.out.println("The account was inserted in the database. ");
+                        else {
+                            Statement s = connection.createStatement();
+                            s.executeUpdate("INSERT INTO `user`(email, name, username, password)" +
+                                    " VALUE ('" + email1 + "' , '" + name1 + "', '" + uName1 + "', '" + pwrd1 + "')");
 
-                    try {
-                        Stage stage = (Stage) createAccountPressed.getScene().getWindow();
-                        stage.close();
+                            System.out.println("The account was inserted in the database. ");
 
-                        Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/loginScreenUI.fxml"));
+                            try {
+                                Stage stage = (Stage) createAccountPressed.getScene().getWindow();
+                                stage.close();
 
-                        Scene newScene = new Scene((Parent) page, 900, 500);
-                        Stage newStage = new Stage();
+                                Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/loginScreenUI.fxml"));
 
-                        newStage.setScene(newScene);
+                                Scene newScene = new Scene((Parent) page, 900, 500);
+                                Stage newStage = new Stage();
 
-                        newStage.show();
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                                newStage.setScene(newScene);
+
+                                newStage.show();
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
                 }
             }
