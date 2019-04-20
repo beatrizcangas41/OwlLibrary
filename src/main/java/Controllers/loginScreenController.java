@@ -6,10 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.image.ImageView;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -19,11 +16,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class loginScreenController {
+    @FXML public Button registerButtonPressed, loginButtonPressed;
 
-    public Button registerButtonPressed, loginButtonPressed;
-    public ImageView logo;
-
-    @FXML TextField passwordTextField, usernameTextField;
+    @FXML private TextField usernameTextField;
+    @FXML private PasswordField passwordField;
 
     public void loginButtonPressed() {
 
@@ -37,9 +33,11 @@ public class loginScreenController {
             }
 
             String uName = usernameTextField.getText();
-            String pwrd = passwordTextField.getText();
+            String pwrd = passwordField.getText();
 
-            if (uName != null && pwrd != null) {
+            if (uName == null || pwrd == null) System.out.println("missing credentials");
+
+            else if (uName != null && pwrd != null) {
                 String query = "SELECT username AND password " +
                         "FROM user WHERE username = '" + uName + "' AND password = '" + pwrd + "'";
 
@@ -48,7 +46,7 @@ public class loginScreenController {
                 assert stmt != null;
                 ResultSet results = stmt.executeQuery(query);
 
-                if (!results.next()) {
+                if (!results.first()) {
                     Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                     errorAlert.setHeaderText("Input not valid");
                     errorAlert.setContentText("Wrong Username or Password");
@@ -56,7 +54,6 @@ public class loginScreenController {
                 }
 
                 else {
-
                     System.out.println("Inputted Data: " + "username: " + uName + " password: " + pwrd);
 
                     String query1 = "SELECT user_type FROM user WHERE username = '" + uName + "' AND password = '" + pwrd + "'";
@@ -88,11 +85,8 @@ public class loginScreenController {
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                    }
-
-
-                    else {
-                        Stage loginStage = (Stage) passwordTextField.getScene().getWindow();
+                    } else {
+                        Stage loginStage = (Stage) passwordField.getScene().getWindow();
 
                         System.out.println("User Page");
 
@@ -100,7 +94,7 @@ public class loginScreenController {
 
                         try {
 
-                            Object page = FXMLLoader.load(loginScreenController.class.getResource("fxml/UserMainScreenUI.fxml"));
+                            Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/UserMainScreenUI.fxml"));
                             Scene newScene = new Scene((Parent) page, 500, 500);
 
                             Stage newStage = new Stage();
@@ -117,7 +111,22 @@ public class loginScreenController {
             e1.printStackTrace();
         }
     }
-    public void registerButtonPressed(ActionEvent actionEvent) {
 
+    public void registerButtonPressed(ActionEvent actionEvent) throws IOException {
+
+        System.out.println("The account page has been loaded");
+
+        Stage stage = (Stage) registerButtonPressed.getScene().getWindow();
+        stage.close();
+
+        Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AccountScreenUI.fxml"));
+
+        Scene newScene = new Scene((Parent) page, 900, 500);
+        Stage newStage = new Stage();
+
+        newStage.setScene(newScene);
+        newStage.show();
     }
+
+
 }
