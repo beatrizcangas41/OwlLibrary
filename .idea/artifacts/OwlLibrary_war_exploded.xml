@@ -19,9 +19,6 @@
           <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
           <element id="library" level="project" name="Maven: com.sun.mail:javax.mail:1.6.2" />
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.17" />
-          <element id="library" level="project" name="Maven: com.springframework.boot:spring-boot-starter-jpa:unknown" />
-          <element id="library" level="project" name="Maven: com.springframework.boot:spring-boot-starter-jdbc:unknown" />
-          <element id="library" level="project" name="Maven: com.springframework.boot:spring-boot-starter-web:unknown" />
           <element id="library" level="project" name="Maven: com.springframework.boot:spring-boot-devtools:unknown" />
           <element id="library" level="project" name="Maven: com.h2database:h2:1.4.196" />
           <element id="library" level="project" name="Maven: org.springframework.boot:spring-boot-starter-web:1.5.8.RELEASE" />
