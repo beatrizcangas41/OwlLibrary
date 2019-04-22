@@ -12,10 +12,8 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class PasswordResetController {
-    @FXML
-    public Button confirmPassword, cancelButton;
-    @FXML
-    public TextField password1, password2;
+    @FXML  public Button confirmPassword, cancelButton;
+    @FXML  public TextField password1, password2, token;
 
     public void confirmPassword(ActionEvent actionEvent) {
 

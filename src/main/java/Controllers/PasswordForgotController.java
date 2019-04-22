@@ -111,8 +111,8 @@ public class PasswordForgotController {
                                     stage.close();
 
                                     try {
-                                        Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/loginScreenUI.fxml"));
-                                        Scene newScene = new Scene((Parent) page, 500, 500);
+                                        Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/PasswordResetUI.fxml"));
+                                        Scene newScene = new Scene((Parent) page, 900, 500);
 
                                         Stage newStage = new Stage();
                                         newStage.setScene(newScene);

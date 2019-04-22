@@ -12,7 +12,7 @@ public class JavaMailUtil {
     private static String subject;
     private static String token;
 
-    private static String pwrdGenerator() {
+    public static String pwrdGenerator() {
         UUID uuid = UUID.randomUUID();
         return uuid.toString();
     }
