@@ -2,10 +2,33 @@ package database;
 
 import model.User;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 
 public class UserDatabaseHandler {
+
+    public User getUserByUsername(String username) throws SQLException{
+        Connection connection = DatabaseConnector.getConnection();
+        String query = "SELECT * FROM user WHERE username = '" + username + "'";
+
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        ResultSet results = pstmt.executeQuery(query);
+
+        User user = null;
+        while (results.next()){
+            String password = results.getString("password");
+            String name = results.getString("name");
+            String email = results.getString("email");
+            String user_type = results.getString("user_type");
+            user = new User(username, name, email, password, user_type);
+        }
+
+        return user;
+    }
+
 
     public static void addUser(User user) {
 
@@ -51,6 +74,31 @@ public class UserDatabaseHandler {
         }
     }
 
+    public boolean userExists(String username){
+        // select * from users where username = username
+        // if it returns 0, user doesn't exist - return false
+        // else return true
+        return true;
+    }
+
+    public boolean verifyCredentials(String username, String plainTextPassword) throws SQLException{
+        Connection connection = DatabaseConnector.getConnection();
+        String query = "SELECT password FROM user WHERE username = '" + username + "'";
+
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        ResultSet results = pstmt.executeQuery(query);
+
+        String passwordFromDatabase = "";
+        while (results.next()){
+            passwordFromDatabase = results.getString("password");
+        }
+
+        // 1) use username to get encrypted password from db
+        // Get salt from db
+        // 3) hash+salt the plaintext password
+        // compare the result from #3 to #1
+        return plainTextPassword.equals(passwordFromDatabase);
+    }
 
     /*
     public void displayUsers(String username, String password) {

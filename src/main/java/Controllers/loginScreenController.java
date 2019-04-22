@@ -1,6 +1,7 @@
 package Controllers;
 
 import database.DatabaseConnector;
+import database.UserDatabaseHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,11 +12,24 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import model.User;
+import util.DialogCreator;
 
 import java.io.IOException;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class loginScreenController {
+
+    private UserDatabaseHandler userDatabaseHandler;
+
+
+    @FXML
+    public void initialize() {
+        userDatabaseHandler = new UserDatabaseHandler();
+    }
 
     @FXML
     private Button registerButtonPressed, loginButtonPressed, forgotPasswordButtonPressed;
@@ -26,7 +40,42 @@ public class loginScreenController {
     private PasswordField passwordField;
 
     @FXML
-    public void loginButtonPressed() throws SQLException {
+    public void loginButtonPressed() {
+
+
+        String uName = usernameTextField.getText();
+        String pwrd = passwordField.getText();
+
+
+        boolean validCredentials = false;
+        try {
+            validCredentials = userDatabaseHandler.verifyCredentials(uName, pwrd);
+        } catch (SQLException e) {
+            DialogCreator.displayErrorDialog("SQL Error", "Unable to verify credentials");
+        }
+
+        if (!validCredentials){
+            DialogCreator.displayErrorDialog("Input not valid", "Wrong Username or Password");
+            return;
+        }
+
+
+
+        // Put the rest of the logic here
+        try {
+            User user = userDatabaseHandler.getUserByUsername(uName);
+            System.out.println(user);
+        } catch (SQLException e) {
+            DialogCreator.displayErrorDialog("SQL Error", "Unable to get user");
+        }
+
+
+
+
+    }
+
+    @FXML
+    public void loginButtonPressed2() throws SQLException {
 
         DatabaseConnector dbConn = new DatabaseConnector();
         Connection conn = DatabaseConnector.getConnection();

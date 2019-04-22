@@ -2,10 +2,9 @@ package model;
 
 // import javax.management.relation.Role;
 
-import javax.persistence.*;
-
-@Entity
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 public class User {
 
@@ -32,10 +31,12 @@ public class User {
         return username;
     }
 
-    public User(String name, String email, String password) {
+    public User(String username, String name, String email, String password, String user_type) {
         this.name = name;
+        this.username = name;
         this.email = email;
         this.password = password;
+        this.user_type = user_type;
     }
 
     public int getUserID() {
@@ -60,5 +61,16 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", user_type='" + user_type + '\'' +
+                '}';
     }
 }
