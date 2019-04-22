@@ -14,11 +14,11 @@ public class UserMainScreenController {
 
     public void logoutButtonPressed(ActionEvent actionEvent) {
         // go to normal page
-        Stage mainStage = (Stage) ((Node)actionEvent.getSource()).getScene().getWindow();
+        Stage mainStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         mainStage.close();
 
         try {
-            GridPane gridPane = FXMLLoader.load(getClass().getResource("Controllers/AdminMainScreenUI.fxml"));
+            GridPane gridPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/loginScreenUI.fxml"));
             Scene newScene = new Scene(gridPane);
             Stage newStage = new Stage();
             newStage.setScene(newScene);

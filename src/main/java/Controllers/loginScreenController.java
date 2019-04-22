@@ -6,109 +6,120 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
+import javafx.scene.control.PasswordField;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 
 public class loginScreenController {
-    @FXML public Button registerButtonPressed, loginButtonPressed;
 
-    @FXML private TextField usernameTextField;
-    @FXML private PasswordField passwordField;
+    @FXML
+    private Button registerButtonPressed, loginButtonPressed, forgotPasswordButtonPressed;
 
-    public void loginButtonPressed() {
+    @FXML
+    private TextField usernameTextField;
+    @FXML
+    private PasswordField passwordField;
 
-        Connection connection = DatabaseConnector.getConnection();
-        Statement stmt = null;
+    @FXML
+    public void loginButtonPressed() throws SQLException {
 
-        try {
-            if (connection != null) {
-                System.out.println("Connection was Successful");
-                stmt = connection.createStatement();
-            }
+        DatabaseConnector dbConn = new DatabaseConnector();
+        Connection conn = DatabaseConnector.getConnection();
 
-            String uName = usernameTextField.getText();
-            String pwrd = passwordField.getText();
+        PreparedStatement pstmt;
 
-            if (uName == null || pwrd == null) System.out.println("missing credentials");
+        if (conn.isClosed()) {
+            System.out.println("Connection Failed");
+        } else {
+            try {
+                String SQL = "SELECT `username`,`password` FROM `user` WHERE `username` =? AND `password` = ?;";
+                pstmt = conn.prepareStatement(SQL);
 
-            else if (uName != null && pwrd != null) {
-                String query = "SELECT username AND password " +
-                        "FROM user WHERE username = '" + uName + "' AND password = '" + pwrd + "'";
+                String uName = usernameTextField.getText();
+                String pwrd = passwordField.getText();
 
-                System.out.println("Database: " + "username: " + uName + " password: " + pwrd);
+                if (uName.isEmpty() || pwrd.isEmpty()) {
+                    System.out.println("missing credentials");
 
-                assert stmt != null;
-                ResultSet results = stmt.executeQuery(query);
-
-                if (!results.first()) {
                     Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                     errorAlert.setHeaderText("Input not valid");
-                    errorAlert.setContentText("Wrong Username or Password");
+                    errorAlert.setContentText("All fields are required. ");
                     errorAlert.showAndWait();
-                }
+                } else if (!uName.isEmpty() && !pwrd.isEmpty()) {
+                    String query = "SELECT username AND password " +
+                            "FROM user WHERE username = '" + uName + "' AND password = '" + pwrd + "'";
 
-                else {
-                    System.out.println("Inputted Data: " + "username: " + uName + " password: " + pwrd);
+                    System.out.println("Database: " + "username: " + uName + " password: " + pwrd);
 
-                    String query1 = "SELECT user_type FROM user WHERE username = '" + uName + "' AND password = '" + pwrd + "'";
+                    ResultSet results = pstmt.executeQuery(query);
 
-                    stmt = connection.createStatement();
-
-                    ResultSet results1 = stmt.executeQuery(query1);
-
-                    String usertype = null;
-                    if (results1.first()) {
-                        usertype = results1.getString(1);
-                    }
-
-                    System.out.println("user_type: " + usertype);
-
-                    assert usertype != null;
-                    if (usertype.equals("Admin")) {
-
-                        System.out.println("Admin Page");
-
-                        try {
-                            Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AdminMainScreenUI.fxml"));
-                            Scene newScene = new Scene((Parent) page, 500, 500);
-
-                            Stage newStage = new Stage();
-                            newStage.setScene(newScene);
-                            newStage.show();
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                    if (!results.first()) {
+                        Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                        errorAlert.setHeaderText("Input not valid");
+                        errorAlert.setContentText("Wrong Username or Password");
+                        errorAlert.showAndWait();
                     } else {
-                        Stage loginStage = (Stage) passwordField.getScene().getWindow();
+                        System.out.println("Inputted Data: " + "username: " + uName + " password: " + pwrd);
 
-                        System.out.println("User Page");
+                        String query1 = "SELECT user_type FROM user WHERE username = '" + uName + "' AND password = '" + pwrd + "'";
 
-                        loginStage.close();
+                        pstmt = conn.prepareStatement(query1);
 
-                        try {
+                        ResultSet results1 = pstmt.executeQuery(query1);
 
-                            Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/UserMainScreenUI.fxml"));
-                            Scene newScene = new Scene((Parent) page, 500, 500);
+                        String usertype = null;
+                        if (results1.first()) {
+                            usertype = results1.getString(1);
+                        }
 
-                            Stage newStage = new Stage();
-                            newStage.setScene(newScene);
-                            newStage.show();
+                        System.out.println("user_type: " + usertype);
 
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                        if (usertype.equals("Admin")) {
+
+                            System.out.println("Admin Page");
+
+                            try {
+                                Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AdminMainScreenUI.fxml"));
+                                Scene newScene = new Scene((Parent) page, 500, 500);
+
+                                Stage newStage = new Stage();
+                                newStage.setScene(newScene);
+                                newStage.show();
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
+                        } else {
+                            Stage loginStage = (Stage) passwordField.getScene().getWindow();
+
+                            System.out.println("User Page");
+
+                            loginStage.close();
+
+                            try {
+
+                                Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/UserMainScreenUI.fxml"));
+                                Scene newScene = new Scene((Parent) page, 500, 500);
+
+                                Stage newStage = new Stage();
+                                newStage.setScene(newScene);
+                                newStage.show();
+
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                            }
                         }
                     }
                 }
+
+            } catch (SQLException e) {
+                e.printStackTrace();
             }
-        } catch (SQLException e1) {
-            e1.printStackTrace();
         }
     }
 
@@ -129,4 +140,18 @@ public class loginScreenController {
     }
 
 
+    public void forgotPasswordButtonPressed(ActionEvent actionEvent) throws IOException {
+        System.out.println("The account page has been loaded");
+
+        Stage stage = (Stage) registerButtonPressed.getScene().getWindow();
+        stage.close();
+
+        Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ForgotPasswordUI.fxml"));
+
+        Scene newScene = new Scene((Parent) page, 900, 500);
+        Stage newStage = new Stage();
+
+        newStage.setScene(newScene);
+        newStage.show();
+    }
 }

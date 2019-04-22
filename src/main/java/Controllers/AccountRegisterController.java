@@ -18,15 +18,19 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-@SuppressWarnings("Duplicates")
-public class AccountScreenController {
+public class AccountRegisterController {
 
-    @FXML private Button createAccountPressed, cancelButtonPressed;
+    @FXML
+    private Button createAccountPressed, cancelButtonPressed;
 
-    @FXML private TextField nameTextField1;
-    @FXML private TextField emailTextField1, emailTextField2;
-    @FXML private TextField usernameTextField1;
-    @FXML private TextField passwordField1, passwordField2;
+    @FXML
+    private TextField nameTextField1;
+    @FXML
+    private TextField emailTextField1, emailTextField2;
+    @FXML
+    private TextField usernameTextField1;
+    @FXML
+    private TextField passwordField1, passwordField2;
 
     public void createAccountPressed() {
 
@@ -34,7 +38,9 @@ public class AccountScreenController {
         Statement stmt2 = null;
 
         try {
-            if (connection != null) {
+            if (connection.isClosed() || connection == null) {
+                System.out.println("Connection Failed");
+            } else if (connection != null || !connection.isClosed()) {
                 System.out.println("Connection was Successful");
                 stmt2 = connection.createStatement();
             }
@@ -56,12 +62,10 @@ public class AccountScreenController {
                 errorAlert.setHeaderText("Input not valid");
                 errorAlert.setContentText("Something went wrong. Please verify your input(s), they may be empty. ");
                 errorAlert.showAndWait();
-            }
+            } else if (!name1.isEmpty() || !email1.isEmpty() || !email2.isEmpty() || !uName1.isEmpty() || !pwrd1.isEmpty() || !pwrd2.isEmpty()) {
 
-            else if (!name1.isEmpty() || !email1.isEmpty() || !email2.isEmpty() || !uName1.isEmpty() || !pwrd1.isEmpty() || !pwrd2.isEmpty()) {
-
-                System.out.println("Printing : " + uName1 + "" + email1 +" " + name1 + " " + pwrd1);
-                String query3 = "SELECT *" + "FROM user WHERE username is not null AND email is not null AND " +
+                System.out.println("Printing : " + uName1 + " " + email1 + " " + name1 + " " + pwrd1);
+                String query3 = "SELECT * FROM user WHERE username is not null AND email is not null AND " +
                         "password is not null AND name is not null";
 
                 ResultSet results3 = stmt2.executeQuery(query3);
@@ -71,16 +75,12 @@ public class AccountScreenController {
                     errorAlert.setHeaderText("Input not valid");
                     errorAlert.setContentText("Email address is not a match. Please try again. ");
                     errorAlert.showAndWait();
-                }
-
-                else if (!pwrd1.equals(pwrd2)) {
+                } else if (!pwrd1.equals(pwrd2)) {
                     Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                     errorAlert.setHeaderText("Input not valid");
                     errorAlert.setContentText("Password is not a match. Please try again. ");
                     errorAlert.showAndWait();
-                }
-
-                else {
+                } else {
                     String query5 = "SELECT username FROM user WHERE username = '" + uName1 + "'";
                     ResultSet results5 = stmt2.executeQuery(query5);
 
@@ -89,9 +89,7 @@ public class AccountScreenController {
                         errorAlert.setHeaderText("Input not valid");
                         errorAlert.setContentText("Username already taken. Please try again. ");
                         errorAlert.showAndWait();
-                    }
-
-                    else {
+                    } else {
                         String query4 = "SELECT email FROM user WHERE email = '" + email1 + "'";
                         ResultSet results4 = stmt2.executeQuery(query4);
 
@@ -100,9 +98,7 @@ public class AccountScreenController {
                             errorAlert.setHeaderText("Input not valid");
                             errorAlert.setContentText("Email already taken. Please try again. ");
                             errorAlert.showAndWait();
-                        }
-
-                        else {
+                        } else {
                             Statement s = connection.createStatement();
                             s.executeUpdate("INSERT INTO `user`(email, name, username, password)" +
                                     " VALUE ('" + email1 + "' , '" + name1 + "', '" + uName1 + "', '" + pwrd1 + "')");
