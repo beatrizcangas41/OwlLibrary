@@ -2,7 +2,7 @@ package util;
 
 import javafx.scene.control.Alert;
 
-public class DialogCreator {
+public class dialogCreator {
 
     public static void displayErrorDialog(String header, String message){
 

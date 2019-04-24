@@ -13,7 +13,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import model.User;
-import util.DialogCreator;
+import util.dialogCreator;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -34,44 +34,35 @@ public class loginScreenController {
     @FXML
     private Button registerButtonPressed, loginButtonPressed, forgotPasswordButtonPressed;
 
-    @FXML
-    private TextField usernameTextField;
-    @FXML
-    private PasswordField passwordField;
+    @FXML private TextField usernameTextField;
+    @FXML private PasswordField passwordField;
 
     @FXML
     public void loginButtonPressed() {
 
-
         String uName = usernameTextField.getText();
         String pwrd = passwordField.getText();
 
-
         boolean validCredentials = false;
+
         try {
-            validCredentials = userDatabaseHandler.verifyCredentials(uName, pwrd);
+            validCredentials = UserDatabaseHandler.verifyLoginCredentials(uName, pwrd);
         } catch (SQLException e) {
-            DialogCreator.displayErrorDialog("SQL Error", "Unable to verify credentials");
+            dialogCreator.displayErrorDialog("SQL Error", "Unable to verify credentials");
         }
 
         if (!validCredentials){
-            DialogCreator.displayErrorDialog("Input not valid", "Wrong Username or Password");
+            dialogCreator.displayErrorDialog("Input not valid", "Wrong Username or Password");
             return;
         }
 
-
-
         // Put the rest of the logic here
         try {
-            User user = userDatabaseHandler.getUserByUsername(uName);
+            User user = UserDatabaseHandler.getUserByUsername(uName);
             System.out.println(user);
         } catch (SQLException e) {
-            DialogCreator.displayErrorDialog("SQL Error", "Unable to get user");
+            dialogCreator.displayErrorDialog("SQL Error", "Unable to get user");
         }
-
-
-
-
     }
 
     @FXML

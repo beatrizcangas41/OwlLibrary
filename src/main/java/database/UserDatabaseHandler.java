@@ -1,119 +1,121 @@
 package database;
 
 import model.User;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import util.passwordEncryption;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
+import static util.dialogCreator.displayErrorDialog;
 
 public class UserDatabaseHandler {
+    private static Connection connection = DatabaseConnector.getConnection();
 
-    public User getUserByUsername(String username) throws SQLException{
-        Connection connection = DatabaseConnector.getConnection();
-        String query = "SELECT * FROM user WHERE username = '" + username + "'";
+    public static User getUserByUsername(String username) throws SQLException{
+        String query1 = "SELECT * FROM user WHERE username = '" + username + "'";
 
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        ResultSet results = pstmt.executeQuery(query);
+        PreparedStatement pstmt = connection.prepareStatement(query1);
+        ResultSet results = pstmt.executeQuery(query1);
 
         User user = null;
         while (results.next()){
-            String password = results.getString("password");
             String name = results.getString("name");
             String email = results.getString("email");
             String user_type = results.getString("user_type");
-            user = new User(username, name, email, password, user_type);
+            String password = results.getString("password");
+            user = new User(name, email, username, password);
         }
 
         return user;
     }
 
+    public static void addUser(String name, String email, String username, String password) throws SQLException {
 
-    public static void addUser(User user) {
+        Statement s = connection.createStatement();
+        password = BCrypt.hashpw(password, BCrypt.gensalt());
 
-        Connection connection = DatabaseConnector.getConnection();
+        s.executeUpdate("INSERT INTO `user`(name, email, username, password)" +
+                " VALUE ('" + name + "' , '" + email + "', '" + username + "', '" + password + "')");
+    }
 
-        if (connection !=null) {
-            System.out.println("Connection Successful");
+    public static boolean userExists (String username) throws SQLException {
+        String query1 = "SELECT * FROM user WHERE username = '" + username + "'";
 
+        PreparedStatement pstmt = connection.prepareStatement(query1);
+        ResultSet results = pstmt.executeQuery(query1);
+
+        User user = null;
+        while (results.next()){
+            String password = results.getString("password");
+        }
+        if (user != null) {
+            System.out.println("User exists");
+            return true;
+        } else {
+            System.out.println("User does NOT exists");
+            return false;
+        }
+    }
+
+    public static boolean verifyLoginCredentials (String username, String password) throws SQLException {
+        User user = getUserByUsername(username);
+
+        boolean verifyMatch = false;
+        if (user != null) {
+            String query1 = "SELECT password FROM user WHERE username = '" + username + "'";
+            PreparedStatement pstmt = connection.prepareStatement(query1);
+            ResultSet results = pstmt.executeQuery(query1);
+
+            String databasePassword = results.getString(password);
+            // passwordMatch = BCrypt.checkpw(password, databasePassword);
+
+            verifyMatch = passwordEncryption.verifyHash(databasePassword, password);
+
+            System.out.println("db pw: " + databasePassword);
+            System.out.println("pw entered: " + password);
+
+            if (verifyMatch) {
+                System.out.println("It matches");
+                System.out.println("db pw: " + databasePassword);
+                System.out.println("pw entered: " + password);
+                return true;
+            } else {
+                System.out.println("It does not match");
+                System.out.println("db pw: " + databasePassword);
+                System.out.println("pw entered: " + password);
+                displayErrorDialog("Invalid input", "please try again");
+                return false;
+            }
+        }
+        return verifyMatch;
+    }
+
+        public static boolean verifyEmail(String username, String email) throws SQLException {
+
+            Connection connection = DatabaseConnector.getConnection();
+            String query = "SELECT email FROM user WHERE username = '" + username + "'";
+
+            PreparedStatement pstmt = connection.prepareStatement(query);
+            ResultSet results = pstmt.executeQuery(query);
+
+            String emailFromDatabase = "";
+            while (results.next()){
+                emailFromDatabase = results.getString("email");
+            }
+
+            return email.equals(emailFromDatabase);
+        }
+
+        public void displayUsers(String username, String password) {
             try {
+                String queryString = "SELECT * FROM user where username =? and password=?";
 
-                String query = " insert into user (name, email, username, password, address) values (?, ?, ?, ?, ?)";
-                PreparedStatement preparedStmt = connection.prepareStatement(query);
+                //set this values using PreparedStatement
+                PreparedStatement stmt = null;
+                ResultSet results = stmt.executeQuery(queryString); //where ps is Object of PreparedStatement
 
-                /*
-                preparedStmt.setString(1, name);
-                preparedStmt.setString(2, email);
-                preparedStmt.setString(3, username);
-                preparedStmt.setString(4, password;
-                preparedStmt.setString(5, address);
-
-                // execute the preparedStatement
-                preparedStmt.execute();
-                */
-
-                ResultSet rs2 = preparedStmt.executeQuery(query);
-
-                while (rs2.next()) {
-                    String name = rs2.getString("name");
-                    String email = rs2.getString("email");
-                    String username = rs2.getString("username");
-                    String address = rs2.getString("address");
-                    System.out.println(name + " | " + email + " | " + username + " | " + address);
-
-                }
-
-            } catch (Exception e) {
+            } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
-
-        else {
-            System.out.println("Connection Fails");
-        }
     }
-
-    public boolean userExists(String username){
-        // select * from users where username = username
-        // if it returns 0, user doesn't exist - return false
-        // else return true
-        return true;
-    }
-
-    public boolean verifyCredentials(String username, String plainTextPassword) throws SQLException{
-        Connection connection = DatabaseConnector.getConnection();
-        String query = "SELECT password FROM user WHERE username = '" + username + "'";
-
-        PreparedStatement pstmt = connection.prepareStatement(query);
-        ResultSet results = pstmt.executeQuery(query);
-
-        String passwordFromDatabase = "";
-        while (results.next()){
-            passwordFromDatabase = results.getString("password");
-        }
-
-        // 1) use username to get encrypted password from db
-        // Get salt from db
-        // 3) hash+salt the plaintext password
-        // compare the result from #3 to #1
-        return plainTextPassword.equals(passwordFromDatabase);
-    }
-
-    /*
-    public void displayUsers(String username, String password) {
-        try {
-            String queryString = "SELECT * FROM user where username =? and password=?";
-
-            //set this values using PreparedStatement
-            PreparedStatement stmt = null;
-            ResultSet results = stmt.executeQuery(queryString); //where ps is Object of PreparedStatement
-
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-    */
-}

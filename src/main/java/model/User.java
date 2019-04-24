@@ -2,21 +2,23 @@ package model;
 
 // import javax.management.relation.Role;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
 public class User {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private int userID;
-
     private String name, username, password, address, email, user_type;
 
+    /*
     public User(String uName, String pwrd) {
         this.username = uName;
         this.password = pwrd;
+    }
+    */
+
+    public User(String name, String username, String email, String password) {
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.password = password;
     }
 
     public String getAddress() {
@@ -31,32 +33,40 @@ public class User {
         return username;
     }
 
-    public User(String username, String name, String email, String password, String user_type) {
-        this.name = name;
-        this.username = name;
-        this.email = email;
-        this.password = password;
-        this.user_type = user_type;
-    }
-
     public int getUserID() {
         return userID;
-    }
-
-    public void setUserID(int userID) {
-        this.userID = userID;
     }
 
     public String getEmail() {
         return email;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
     public String getPassword() {
         return password;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public void setUser_type(String user_type) {
+        this.user_type = user_type;
+    }
+
+    public void setUserID(int userID) {
+        this.userID = userID;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setPassword(String password) {
