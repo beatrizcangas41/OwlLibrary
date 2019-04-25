@@ -24,8 +24,6 @@ public class UserTest {
         userExists("admin_Beatriz");
         System.out.println();
 
-        System.out.println("testB: ");
-        userExists("testing non existent user");
         System.out.println();
 
         // Test # 3: Verify Credentials

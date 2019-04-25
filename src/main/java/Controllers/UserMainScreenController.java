@@ -16,10 +16,11 @@ import model.Book;
 
 import java.io.IOException;
 
-@SuppressWarnings("Duplicates")
 public class UserMainScreenController {
 
-    TableColumn<Book, String> titleColumn, authorColumn, publishDateColumn;
+    private TableColumn<Book, String> titleColumn;
+    private TableColumn<Book, String> authorColumn;
+    private TableColumn<Book, String> publishDateColumn;
     @FXML
     TableView<Book> tableView;
 
@@ -45,27 +46,26 @@ public class UserMainScreenController {
         }
     }
 
-    private void setupTableView(){
-
-
+    private void setupTableView() {
+        // sample
         ObservableList<Book> books = FXCollections.observableArrayList(
-                new Book("Book Title 1", "Book Author 1", "2019"),
-                new Book("Book Title 2", "Book Author 2", "2019"),
-                new Book("Book Title 3", "Book Author 3", "2019"),
-                new Book("Book Title 4", "Book Author 4", "2019"),
-                new Book("Book Title 5", "Book Author 5", "2019"),
-                new Book("Book Title 6", "Book Author 6", "2019"));
+                new Book("Book Title 1", "Book Author 1", "Comedy", 50),
+                new Book("Book Title 2", "Book Author 2", "Comedy", 50),
+                new Book("Book Title 3", "Book Author 3", "Comedy", 50),
+                new Book("Book Title 4", "Book Author 4", "Comedy", 50),
+                new Book("Book Title 5", "Book Author 5", "Comedy", 50),
+                new Book("Book Title 6", "Book Author 6", "Comedy", 50));
 
-        titleColumn = new TableColumn("Title");
-        authorColumn = new TableColumn("Author");
-        publishDateColumn = new TableColumn("Date");
+        titleColumn = new TableColumn<>("Title");
+        authorColumn = new TableColumn<>("Author");
+        publishDateColumn = new TableColumn<>("Date");
 
-        titleColumn.setCellValueFactory((new PropertyValueFactory<Book, String>("title")));
-        authorColumn.setCellValueFactory((new PropertyValueFactory<Book, String>("author")));
-        publishDateColumn.setCellValueFactory((new PropertyValueFactory<Book, String>("publishDate")));
+        titleColumn.setCellValueFactory((new PropertyValueFactory<>("title")));
+        authorColumn.setCellValueFactory((new PropertyValueFactory<>("author")));
+        publishDateColumn.setCellValueFactory((new PropertyValueFactory<>("publishDate")));
 
 
-        titleColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.4));
+        // titleColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.4));
         authorColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.4));
         publishDateColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.2));
 

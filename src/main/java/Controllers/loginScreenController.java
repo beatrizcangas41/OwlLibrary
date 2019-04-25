@@ -12,14 +12,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import model.User;
-import util.dialogCreator;
 
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import static util.dialogCreator.displayErrorDialog;
 
 public class loginScreenController {
 
@@ -38,35 +38,67 @@ public class loginScreenController {
     @FXML private PasswordField passwordField;
 
     @FXML
-    public void loginButtonPressed() {
+    public void loginButtonPressed1() {
 
         String uName = usernameTextField.getText();
         String pwrd = passwordField.getText();
 
-        boolean validCredentials = false;
-
         try {
-            validCredentials = UserDatabaseHandler.verifyLoginCredentials(uName, pwrd);
-        } catch (SQLException e) {
-            dialogCreator.displayErrorDialog("SQL Error", "Unable to verify credentials");
-        }
+            boolean credentials = UserDatabaseHandler.verifyLoginCredentials(uName, pwrd);
 
-        if (!validCredentials){
-            dialogCreator.displayErrorDialog("Input not valid", "Wrong Username or Password");
-            return;
-        }
+            if (!UserDatabaseHandler.verifyLoginCredentials(uName, pwrd)){
+                displayErrorDialog("Input not valid", "Wrong Username or Password");
+            }
+            else {
+               String user_type = UserDatabaseHandler.getUserTypeFromCredentials(uName, pwrd);
 
-        // Put the rest of the logic here
-        try {
-            User user = UserDatabaseHandler.getUserByUsername(uName);
-            System.out.println(user);
+               if (user_type.equals("Admin")) {
+                   System.out.println("Admin Page");
+
+                   try {
+                       Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AdminMainScreenUI.fxml"));
+                       Scene newScene = new Scene((Parent) page, 500, 500);
+
+                       Stage newStage = new Stage();
+                       newStage.setScene(newScene);
+                       newStage.show();
+
+                   } catch (IOException e) {
+                       e.printStackTrace();
+                   }
+               }
+
+               else if (user_type.equals("User")) {
+                   Stage loginStage = (Stage) passwordField.getScene().getWindow();
+
+                   System.out.println("User Page");
+
+                   loginStage.close();
+
+                   try {
+
+                       Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/UserMainScreenUI.fxml"));
+                       Scene newScene = new Scene((Parent) page, 500, 500);
+
+                       Stage newStage = new Stage();
+                       newStage.setScene(newScene);
+                       newStage.show();
+
+                   } catch (IOException e) {
+                       e.printStackTrace();
+                   }
+               }
+
+               else displayErrorDialog("Error", "The user has not been classified ");
+            }
+
         } catch (SQLException e) {
-            dialogCreator.displayErrorDialog("SQL Error", "Unable to get user");
+            displayErrorDialog("SQL Error", "Unable to verify credentials");
         }
     }
 
     @FXML
-    public void loginButtonPressed2() throws SQLException {
+    public void loginButtonPressed() throws SQLException {
 
         DatabaseConnector dbConn = new DatabaseConnector();
         Connection conn = DatabaseConnector.getConnection();
@@ -107,7 +139,6 @@ public class loginScreenController {
                         System.out.println("Inputted Data: " + "username: " + uName + " password: " + pwrd);
 
                         String query1 = "SELECT user_type FROM user WHERE username = '" + uName + "' AND password = '" + pwrd + "'";
-
                         pstmt = conn.prepareStatement(query1);
 
                         ResultSet results1 = pstmt.executeQuery(query1);

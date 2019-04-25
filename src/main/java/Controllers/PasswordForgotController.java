@@ -20,7 +20,9 @@ import static util.emailValidatorUtil.emailValidator;
 
 public class PasswordForgotController {
     @FXML
-    public Button goBackButton, confirmEmail;
+    public Button goBackButton;
+    @FXML
+    public Button confirmEmail;
 
     @FXML
     private TextField uName, email1, email2;
@@ -75,69 +77,67 @@ public class PasswordForgotController {
                         errorAlert.setHeaderText("Input not valid");
                         errorAlert.setContentText("Wrong Credentials. Please try again. ");
                         errorAlert.showAndWait();
-                    } else {
-                        try {
+                    } else try {
 
-                            String uuid = getToken();
-                            // uuid.toString();
+                        String uuid = getToken();
+                        // uuid.toString();
 
-                            System.out.println("token: " + uuid);
+                        System.out.println("token: " + uuid);
 
-                            // create the java mysql update preparedStatement
-                            String query = "UPDATE user SET token = ? where username = ?";
-                            PreparedStatement pstmt = conn.prepareStatement(query);
+                        // create the java mysql update preparedStatement
+                        String query = "UPDATE user SET token = ? where username = ?";
+                        PreparedStatement pstmt = conn.prepareStatement(query);
 
-                            pstmt.setString(1, uuid);
-                            pstmt.setString(2, username1);
-                            // pstmt.setString(1, uuid.toString());
+                        pstmt.setString(1, uuid);
+                        pstmt.setString(2, username1);
+                        // pstmt.setString(1, uuid.toString());
 
-                            if (!pstmt.execute()) {
-                                System.out.println("The token was added in the database. ");
+                        if (!pstmt.execute()) {
+                            System.out.println("The token was added in the database. ");
 
 
-                                if (emailValidator(emailEntered1)) {
-                                    System.out.print("The Email address " + emailEntered1 + " is valid");
-                                    sendMail(emailEntered1);
-                                    System.out.println("The email was sent. ");
+                            if (emailValidator(emailEntered1)) {
+                                System.out.print("The Email address " + emailEntered1 + " is valid");
+                                sendMail(emailEntered1);
+                                System.out.println("The email was sent. ");
 
-                                    Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
-                                    infoAlert.setHeaderText("An email has been sent out");
-                                    infoAlert.setContentText("Please use the token to reset your password");
-                                    infoAlert.showAndWait();
+                                Alert infoAlert = new Alert(Alert.AlertType.INFORMATION);
+                                infoAlert.setHeaderText("An email has been sent out");
+                                infoAlert.setContentText("Please use the token to reset your password");
+                                infoAlert.showAndWait();
 
-                                    System.out.println("Confirmation Sent");
+                                System.out.println("Confirmation Sent");
 
-                                    Stage stage = (Stage) confirmEmail.getScene().getWindow();
-                                    stage.close();
+                                Stage stage = (Stage) confirmEmail.getScene().getWindow();
+                                stage.close();
 
-                                    try {
-                                        Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/PasswordResetUI.fxml"));
-                                        Scene newScene = new Scene((Parent) page, 900, 500);
+                                try {
+                                    Object page = FXMLLoader.load(PasswordForgotController.class.getClassLoader().getResource("fxml/PasswordResetUI.fxml"));
+                                    Scene newScene = new Scene((Parent) page, 900, 500);
 
-                                        Stage newStage = new Stage();
-                                        newStage.setScene(newScene);
-                                        newStage.show();
+                                    Stage newStage = new Stage();
+                                    newStage.setScene(newScene);
+                                    newStage.show();
 
-                                    } catch (IOException e) {
-                                        e.printStackTrace();
-                                    }
-                                } else {
-                                    System.out.print("The Email address " + emailEntered1 + " isn't valid");
-
-                                    Alert errorAlert = new Alert(Alert.AlertType.ERROR);
-                                    errorAlert.setHeaderText("Input not valid");
-                                    errorAlert.setContentText("The Email Address is not a valid address. \n\n" +
-                                            "Please try registering again or Contact Us, our email is OwlLibraryBookstore@gmail.com" +
-                                            " and don't forget to include your username in the email. ");
-                                    errorAlert.showAndWait();
+                                } catch (IOException e) {
+                                    e.printStackTrace();
                                 }
                             } else {
-                                System.out.println("The token could not be added. Something failed");
-                            }
+                                System.out.print("The Email address " + emailEntered1 + " isn't valid");
 
-                        } catch (Exception e) {
-                            e.printStackTrace();
+                                Alert errorAlert = new Alert(Alert.AlertType.ERROR);
+                                errorAlert.setHeaderText("Input not valid");
+                                errorAlert.setContentText("The Email Address is not a valid address. \n\n" +
+                                        "Please try registering again or Contact Us, our email is OwlLibraryBookstore@gmail.com" +
+                                        " and don't forget to include your username in the email. ");
+                                errorAlert.showAndWait();
+                            }
+                        } else {
+                            System.out.println("The token could not be added. Something failed");
                         }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
                     }
                 }
             }
