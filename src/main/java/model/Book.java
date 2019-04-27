@@ -32,7 +32,7 @@ public class Book {
                 this.title = bTitle;
                 this.author = bAuthor;
                 this.price = bPrice;
-                this.quantity = 3;
+                this.quantity = 15;
                 this.description = bDescription;
         }
 
