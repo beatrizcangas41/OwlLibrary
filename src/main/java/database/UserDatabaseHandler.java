@@ -65,11 +65,12 @@ public class UserDatabaseHandler {
     }
 
     public static boolean verifyLoginCredentials (String username, String password) throws SQLException {
+
         String query1 = "SELECT * FROM user WHERE username = '" + username + "'";
         PreparedStatement pstmt = connection.prepareStatement(query1);
         ResultSet results = pstmt.executeQuery(query1);
 
-        password = BCrypt.hashpw(password, BCrypt.gensalt());
+        System.out.println("pw entered: " + password);
 
         String dbPassword = null;
 
@@ -80,7 +81,8 @@ public class UserDatabaseHandler {
                 System.out.println("pw entered: " + password);
             }
 
-            if (password.equals(dbPassword)) {
+
+            if (BCrypt.checkpw(password, dbPassword)) {
                 System.out.println("It matches");
                 return true;
             }
@@ -91,13 +93,14 @@ public class UserDatabaseHandler {
                 System.out.println("pw entered: " + password);
                 return false;
             }
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
         return password.equals(dbPassword);
     }
-
 
     public static boolean verifyEmail(String username, String email) throws SQLException {
 
@@ -114,15 +117,14 @@ public class UserDatabaseHandler {
         return email.equals(emailFromDatabase);
     }
 
-
-    public static String getUserTypeFromCredentials(String username, String password) throws SQLException {
-        String query1 = "SELECT user_type FROM user WHERE username = '" + username + "' AND password = '" + password + "'";
+    public static String getUserTypeFromUsername(String username) throws SQLException {
+        String query1 = "SELECT user_type FROM user WHERE username = '" + username + "'";
         PreparedStatement pstmt = connection.prepareStatement(query1);
         ResultSet results1 = pstmt.executeQuery(query1);
 
-        String usertype = String.valueOf(results1);
+        String usertype = null;
 
-        if (results1.first()) {
+        while (results1.next()) {
             usertype = results1.getString("user_type");
         }
 
@@ -133,19 +135,6 @@ public class UserDatabaseHandler {
         else System.out.println("User not classified");
 
         return usertype;
-    }
-
-    public void displayUsers(String username, String password) {
-        try {
-            String queryString = "SELECT * FROM user where username =? and password=?";
-
-            //set this values using PreparedStatement
-            PreparedStatement stmt = null;
-            ResultSet results = stmt.executeQuery(queryString); //where ps is Object of PreparedStatement
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
     }
 
     public static boolean verifyToken (String token) throws SQLException {

@@ -45,7 +45,9 @@ public class hello extends Application  {
     private void buttonClick(ActionEvent event)
     {
         // Counts number of button clicks and shows the result on a label
-        count = count + 1;
+        // for (int i = 0; i < Book.getQuantity(); i++) {
+            count = count + 1;
+        //}
         myLabel.setText(Integer.toString(count));
     }
 }

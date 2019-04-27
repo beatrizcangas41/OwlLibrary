@@ -25,7 +25,6 @@ public class loginScreenController {
 
     private UserDatabaseHandler userDatabaseHandler;
 
-
     @FXML
     public void initialize() {
         userDatabaseHandler = new UserDatabaseHandler();
@@ -38,7 +37,7 @@ public class loginScreenController {
     @FXML private PasswordField passwordField;
 
     @FXML
-    public void loginButtonPressed1() {
+    public void loginButtonPressed() {
 
         String uName = usernameTextField.getText();
         String pwrd = passwordField.getText();
@@ -50,14 +49,17 @@ public class loginScreenController {
                 displayErrorDialog("Input not valid", "Wrong Username or Password");
             }
             else {
-               String user_type = UserDatabaseHandler.getUserTypeFromCredentials(uName, pwrd);
+               String user_type = UserDatabaseHandler.getUserTypeFromUsername(uName);
 
                if (user_type.equals("Admin")) {
                    System.out.println("Admin Page");
 
                    try {
+                       Stage stage = (Stage) loginButtonPressed.getScene().getWindow();
+                       stage.close();
+
                        Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AdminMainScreenUI.fxml"));
-                       Scene newScene = new Scene((Parent) page, 500, 500);
+                       Scene newScene = new Scene((Parent) page, 1200, 800);
 
                        Stage newStage = new Stage();
                        newStage.setScene(newScene);
@@ -76,9 +78,11 @@ public class loginScreenController {
                    loginStage.close();
 
                    try {
+                       Stage stage = (Stage) loginButtonPressed.getScene().getWindow();
+                       stage.close();
 
                        Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/UserMainScreenUI.fxml"));
-                       Scene newScene = new Scene((Parent) page, 500, 500);
+                       Scene newScene = new Scene((Parent) page, 1200, 800);
 
                        Stage newStage = new Stage();
                        newStage.setScene(newScene);
@@ -98,7 +102,7 @@ public class loginScreenController {
     }
 
     @FXML
-    public void loginButtonPressed() throws SQLException {
+    public void loginButtonPressed1() throws SQLException {
 
         DatabaseConnector dbConn = new DatabaseConnector();
         Connection conn = DatabaseConnector.getConnection();
@@ -122,7 +126,9 @@ public class loginScreenController {
                     errorAlert.setHeaderText("Input not valid");
                     errorAlert.setContentText("All fields are required. ");
                     errorAlert.showAndWait();
-                } else if (!uName.isEmpty() && !pwrd.isEmpty()) {
+                }
+
+                else if (!uName.isEmpty() && !pwrd.isEmpty()) {
                     String query = "SELECT username AND password " +
                             "FROM user WHERE username = '" + uName + "' AND password = '" + pwrd + "'";
 
@@ -156,7 +162,7 @@ public class loginScreenController {
 
                             try {
                                 Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AdminMainScreenUI.fxml"));
-                                Scene newScene = new Scene((Parent) page, 500, 500);
+                                Scene newScene = new Scene((Parent) page, 1200, 800);
 
                                 Stage newStage = new Stage();
                                 newStage.setScene(newScene);
@@ -175,7 +181,7 @@ public class loginScreenController {
                             try {
 
                                 Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/UserMainScreenUI.fxml"));
-                                Scene newScene = new Scene((Parent) page, 500, 500);
+                                Scene newScene = new Scene((Parent) page, 1200, 800);
 
                                 Stage newStage = new Stage();
                                 newStage.setScene(newScene);
@@ -187,7 +193,6 @@ public class loginScreenController {
                         }
                     }
                 }
-
             } catch (SQLException e) {
                 e.printStackTrace();
             }

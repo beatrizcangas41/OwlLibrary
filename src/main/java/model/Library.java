@@ -10,8 +10,7 @@ public class Library extends Book
     public List<Book> libraryBooks = new ArrayList<>();
     
     
-    public Library()
-    {
+    public Library() {
         this.libraryName = null;
         this.libraryID = null;
     }
@@ -47,16 +46,16 @@ public class Library extends Book
     
     private boolean checkAvailability(List Book)
     {
-        model.Book b = new Book();
+        Book b = new Book();
 
         if(Book.size() != 0)
         {
-            return b.availability;
+            return availability;
         }
         else
         {
-            b.availability = false;
-            return b.availability;
+            availability = false;
+            return availability;
         }
     }
 }

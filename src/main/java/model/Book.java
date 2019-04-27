@@ -1,85 +1,104 @@
 package model;
 
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+
 public class Book {
 
-        // instance variables - replace the example below with your own
-        private String title, author, series;
-        private double price;
-        private int quantity;
-        private String description, Availability, library;
-        public boolean availability = true;
+        private static int quantity;
+        public static boolean availability = true;
 
-        public Book() {
-                // initialise instance variables
-                title = null;
-                author = null;
-                series = null;
-                description = null;
-                price = 0;
+        private SimpleIntegerProperty bookID = new SimpleIntegerProperty();
+        private String title, author;
+        private String description = String.valueOf(new SimpleStringProperty());
+        private String library = String.valueOf(new SimpleStringProperty());
+        private Double price;
+
+        Book(String title, String author, String description, double price) {
+                bookID = null;
+                this.title = null;
+                this.author = null;
+                this.description = null;
+                this.price = null;
                 quantity = 0;
         }
 
-        public Book(String title)
-        {
-                this.title = title;
+        Book() {
+                this.title = null;
                 this.author = null;
-                this.series = null;
                 this.description = null;
-                this.price = 0;
+                this.price = null;
+                quantity = 0;
         }
 
-        public Book(String bTitle, String bAuthor, String bDescription, double bPrice) {
-                this.title = bTitle;
+        public Book(String bTitle, String bAuthor, String bDescription, Double bPrice) {
                 this.author = bAuthor;
-                this.price = bPrice;
-                this.quantity = 3;
+                this.title = bTitle;
                 this.description = bDescription;
+                this.price = bPrice;
+                quantity = 3;
         }
 
-        public Book(String bTitle, String bAuthor, String bDescription, String bSeries, double bPrice) {
-                this.title = bTitle;
-                this.author = bAuthor;
-                this.series = bSeries;
-                this.description = bDescription;
-                this.price = bPrice;
-                this.quantity = 3;
-        }
         public Book(String title, String author) {
                 this.title = title;
                 this.author = author;
+        }
+
+        public static boolean isAvailability() {
+                return availability;
+        }
+
+        public void setAvailability(boolean availability) {
+                Book.availability = availability;
+        }
+
+        public int getBookID() {
+                return bookID.get();
+        }
+
+        public SimpleIntegerProperty bookIDProperty() {
+                return bookID;
+        }
+
+        public void setBookID(int bookID) {
+                this.bookID.set(bookID);
+        }
+
+        public String getDescription() {
+                return description;
+        }
+
+        public String getLibrary() {
+                return library;
+        }
+
+        public String getTitle() {
+                return this.title;
+        }
+
+        public String getAuthor() {
+                return this.author;
+        }
+
+
+        public static int getQuantity() {
+                return quantity;
+        }
+
+        public Double getPrice() {
+                return this.price;
+        }
+
+        public void setPrice(Double price) {
+                this.price = price;
         }
 
         public void setTitle(String title) {
                 this.title = title;
         }
 
-
         public void setAuthor(String author) {
                 this.author = author;
-        }
-
-
-        public String getTitle() {
-                return this.title;
-        }
-
-        public String  getAuthor() {
-                return this.author;
-        }
-
-        public String getSeries() {
-                return this.series;
-        }
-
-        public String getLibrary() {
-                return this.library;
-        }
-        public int getQuantity() {
-                return this.quantity;
-        }
-
-        public double getPrice() {
-                return this.price;
         }
 
         public void setLibrary(String name) {
@@ -87,18 +106,22 @@ public class Book {
         }
 
         public void setQuantity(int value) {
-                this.quantity = this.quantity - value;
+                quantity = quantity - value;
+        }
+
+        public void setDescription(String description) {
+                this.description = description;
         }
 
         private boolean availability() {
-                return this.availability;
+                return availability;
         }
 
         @Override
         public String toString() {
-                return "\nTitle: " + this.title + "\nAuthor: " + this.author + "\t\t\t\t\t\t\tPrice: " + this.price + "\t\t\t\t\tSeries: "+
-                        this.series +"\nDescription: " + this.description  + "\nLocation: " + this.library + "\nAvailability: " +
-                        availability() + "\t\t\t\tCount: " + this.quantity;
+                return "\nTitle: " + this.title + "\nAuthor: " + this.author + "\t\t\t\t\t\t\tPrice: " + this.price +
+                        "\nDescription: " + this.description  + "\nLocation: " + this.library + "\nAvailability: " +
+                        availability() + "\t\t\t\tCount: " + quantity;
         }
 }
 

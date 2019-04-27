@@ -92,7 +92,7 @@ public class AccountRegisterController {
                             }
                         }
 
-                        else if (!userExists && !verifyEmail) {
+                        else {
 
                             UserDatabaseHandler.addUser(name1, email1, uName1, pwrd1);
 
@@ -109,11 +109,6 @@ public class AccountRegisterController {
                             newStage.setScene(newScene);
 
                             newStage.show();
-                        }
-
-                        else {
-                            String message = "credentials are already taken. Please try again";
-                            dialogCreator.displayErrorDialog("Input not valid", message);
                         }
                     } catch (Exception e) {
                         e.printStackTrace();

@@ -56,10 +56,11 @@ public class Display extends Application {
                 System.out.println("\n" + book.toString());
             }
 
+            /*
             else if (book.getSeries().contains(title)) {
                 System.out.println("Series: " + book.getSeries() + "\t\t\tSeries from String: " + title);
                 System.out.println("\n" + book.toString());
-            }
+            }*/
 
             else {
                 System.out.println("Action not completed...");
@@ -112,7 +113,9 @@ public class Display extends Application {
                 } else {
                     book.availability = false;
                 }
-            } else if (book.getSeries().contains(rent)) {
+            }
+            /*
+            else if (book.getSeries().contains(rent)) {
                 System.out.println("Series: " + book.getSeries() + "\t\t\tSeries from String: " + rent);
                 System.out.println("\n" + book.toString());
                 if (book.getQuantity() != 0) {
@@ -120,7 +123,9 @@ public class Display extends Application {
                 } else {
                     book.availability = false;
                 }
-            } else {
+            }*/
+
+            else {
                 System.out.println();
             }
         }

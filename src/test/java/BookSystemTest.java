@@ -85,7 +85,11 @@ public class BookSystemTest {
         FileReader fis;
         ObjectInput in = null;
         File file = new File("Harry_Potter_Series.txt");
-        String BookTitle, Author, Description, Series, Price;
+        String BookTitle;
+        String Author;
+        String Description;
+        String Series;
+        String Price;
         String LibName;
         String LibID;
         double price;
@@ -129,7 +133,7 @@ public class BookSystemTest {
                     Series = splitL.get(b + 3);
                     Price = splitL.get(b + 4);
                     price = Double.parseDouble(Price);
-                    book = new Book(BookTitle, Author, Description, Series, price);
+                    book = new Book(BookTitle, Author, Description, price);
                     show.addBookToList(book);
                     //System.out.println("\n\nBook Title: " + BookTitle + "\nAuthor: " + Author + "\nDescription: " + Description + "\nSeries: " + Series + "\nPrice: " + price + "\n\n");
                     b = b + 4;

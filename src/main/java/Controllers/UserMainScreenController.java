@@ -1,5 +1,6 @@
 package Controllers;
 
+import database.BookDatabaseHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -7,25 +8,36 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import model.Book;
 
 import java.io.IOException;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 public class UserMainScreenController {
 
-    private TableColumn<Book, String> titleColumn;
-    private TableColumn<Book, String> authorColumn;
-    private TableColumn<Book, String> publishDateColumn;
-    @FXML
-    TableView<Book> tableView;
+    @FXML private TableView<Book> tableView;
+
+    @FXML private TableColumn<Book, String> titleColumn;
+    @FXML private TableColumn<Book, String> authorColumn;
+    @FXML private TableColumn<Book, String> descriptionColumn;
+    @FXML private TableColumn<Book, Double> priceColumn;
+    @FXML private TableColumn<Book, Integer> quantityColumn;
+
+    @FXML private Button addButton, addRemove, addUpdate;
+    @FXML private Button goButton;
+    @FXML private Button bookButton;
 
     @FXML
-    public void initialize() {
+    public void initialize() throws SQLException {
         setupTableView();
     }
 
@@ -46,34 +58,70 @@ public class UserMainScreenController {
         }
     }
 
-    private void setupTableView() {
-        // sample
-        ObservableList<Book> books = FXCollections.observableArrayList(
-                new Book("Book Title 1", "Book Author 1", "Comedy", 50),
-                new Book("Book Title 2", "Book Author 2", "Comedy", 50),
-                new Book("Book Title 3", "Book Author 3", "Comedy", 50),
-                new Book("Book Title 4", "Book Author 4", "Comedy", 50),
-                new Book("Book Title 5", "Book Author 5", "Comedy", 50),
-                new Book("Book Title 6", "Book Author 6", "Comedy", 50));
+    private void setupTableView() throws SQLException {
+        ResultSet resultSet = BookDatabaseHandler.getBooks();
+        ObservableList<Book> book = FXCollections.observableArrayList();
+
+        String title, author, description;
+        double price;
+
+        while(resultSet.next()){
+            book.add(new Book(
+                    resultSet.getString("title"),
+                    resultSet.getString("author"),
+                    resultSet.getString("description"),
+                    resultSet.getDouble("price")));
+        }
 
         titleColumn = new TableColumn<>("Title");
         authorColumn = new TableColumn<>("Author");
-        publishDateColumn = new TableColumn<>("Date");
+        descriptionColumn = new TableColumn<>("Description");
+        priceColumn = new TableColumn<>("Price");
+        quantityColumn = new TableColumn<>("Quantity");
 
-        titleColumn.setCellValueFactory((new PropertyValueFactory<>("title")));
-        authorColumn.setCellValueFactory((new PropertyValueFactory<>("author")));
-        publishDateColumn.setCellValueFactory((new PropertyValueFactory<>("publishDate")));
+        titleColumn.setCellValueFactory(new PropertyValueFactory("title"));
+        authorColumn.setCellValueFactory(new PropertyValueFactory("author"));
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory("description"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory("price"));
+        quantityColumn.setCellValueFactory(new PropertyValueFactory("quantity"));
 
 
-        // titleColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.4));
-        authorColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.4));
-        publishDateColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.2));
+        titleColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.2));
+        authorColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.3));
+        descriptionColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.3));
+        priceColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1));
+        quantityColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1));
+
+        TableColumn<Book, Void> actionColumn = new TableColumn<>("Action");
+
+        actionColumn.setCellFactory(param -> new TableCell<Book, Void>() {
+            private final Button editButton = new Button("edit");
+            private final Button deleteButton = new Button("delete");
+            private final HBox pane = new HBox(deleteButton, editButton);
+
+            {
+                deleteButton.setOnAction(event -> {
+                    Book book1 = getTableView().getItems().get(getIndex());
+                    System.out.println(book1.getQuantity() + "   " + book1.isAvailability());
+                });
+
+                editButton.setOnAction(event -> {
+                    Book getPatient = getTableView().getItems().get(getIndex());
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+
+                setGraphic(empty ? null : pane);
+            }
+        });
 
 
-        tableView.getColumns().addAll(titleColumn, authorColumn, publishDateColumn);
 
-        tableView.setItems(books);
+        tableView.getColumns().addAll(titleColumn, authorColumn, descriptionColumn, priceColumn, actionColumn);
+        tableView.setItems(book);
+
     }
-
-
 }
