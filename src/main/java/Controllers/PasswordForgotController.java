@@ -105,7 +105,7 @@ public class PasswordForgotController {
 
                                 System.out.println("Confirmation Sent");
 
-                                sceneChange.sceneChangeButton("fxml/PasswordResetUI.fxml", confirmEmail);
+                                sceneChange.sceneChangeButton("fxml/PasswordResetUI.fxml", confirmEmail, 800, 500);
 
                             } else {
                                 System.out.print("The Email address " + emailEntered1 + " isn't valid");
@@ -135,6 +135,6 @@ public class PasswordForgotController {
     void goBackButton(ActionEvent actionEvent) {
         System.out.println("Go Back Button Pressed");
 
-        sceneChange.sceneChangeButton("fxml/loginScreenUI.fxml", goBackButton);
+        sceneChange.sceneChangeButton("fxml/loginScreenUI.fxml", goBackButton, 800, 500);
     }
 }

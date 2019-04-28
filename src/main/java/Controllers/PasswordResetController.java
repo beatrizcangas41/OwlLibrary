@@ -67,7 +67,7 @@ public class PasswordResetController {
                         System.out.println("password updated");
                         displayInformationDialog("Confirmation", "your password is been updated. ");
 
-                        sceneChange.sceneChangeButton("fxml/loginScreenUI.fxml", confirmPassword);
+                        sceneChange.sceneChangeButton("fxml/loginScreenUI.fxml", confirmPassword, 800, 500);
                     }
                 }
             }
@@ -75,7 +75,7 @@ public class PasswordResetController {
             else {
                 displayErrorDialog("Input not valid", "Verify your credentials. Please try again. ");
 
-                sceneChange.sceneChangeButton("fxml/ForgotPasswordUI.fxml", confirmPassword);
+                sceneChange.sceneChangeButton("fxml/ForgotPasswordUI.fxml", confirmPassword, 800, 500);
             }
         }
     }
@@ -83,6 +83,6 @@ public class PasswordResetController {
     public void cancelButton(ActionEvent actionEvent) {
         System.out.println("Go Back Button Pressed");
 
-        sceneChange.sceneChangeButton("fxml/loginScreenUI.fxml", cancelButton);
+        sceneChange.sceneChangeButton("fxml/loginScreenUI.fxml", cancelButton, 800, 500);
     }
 }

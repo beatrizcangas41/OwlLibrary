@@ -3,47 +3,73 @@ package Controllers;
 import database.BookDatabaseHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Book;
 import util.sceneChange;
 
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class UserMainScreenController {
 
-    @FXML private MenuButton menuButton;
-    @FXML private MenuItem logoutButtonPressed;
-    @FXML private TableView<Book> tableView;
+    @FXML private TextField searchBar;
+    @FXML public MenuButton menuButton, menuDropdownButton;
+    @FXML private Button searchButton, logoutButtonPressed, SearhButton;
+    @FXML private ComboBox filterTypeComBoBox, menuComboBox;
 
-    @FXML private TableColumn<Book, String> titleColumn;
-    @FXML private TableColumn<Book, String> authorColumn;
-    @FXML private TableColumn<Book, String> descriptionColumn;
+    @FXML private TableView<Book> tableView;
+    @FXML private TableColumn<Book, String> titleColumn, authorColumn, descriptionColumn;
     @FXML private TableColumn<Book, Double> priceColumn;
     @FXML private TableColumn<Book, Integer> quantityColumn;
     @FXML private TableColumn<Book, Void> actionColumn;
 
-    @FXML private Button addButton;
-
     @FXML
     public void initialize() throws SQLException {
+        String[] filterValues = {"Title", "Author", "Description", "Price"};
+        filterTypeComBoBox.setItems(FXCollections.observableArrayList(filterValues));
         setupTableView();
     }
 
-    public void logoutButtonPressed(ActionEvent actionEvent) {
-        sceneChange.sceneChangeMenuButton("fxml/loginScreenUI.fxml", menuButton);
+    public void logout(ActionEvent actionEvent) {
+        sceneChange.sceneChangeButton("fxml/loginScreenUI.fxml", logoutButtonPressed, 1200, 800);
+    }
+
+    private void openShoppingCart(Book book){
+        try {
+            // Load an instance of the menu bar and assign it to menubar
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/ShoppingCartUI.fxml"));
+            Parent parent = loader.load();
+
+            Scene newScene = new Scene(parent, 1000, 1000);
+            Stage newStage = new Stage();
+
+            newStage.setScene(newScene);
+            newStage.show();
+
+            ShoppingCartController shoppingCartController = loader.getController();
+            shoppingCartController.setBook(book);
+
+        } catch (IOException ioEx) {
+            ioEx.printStackTrace();
+        }
     }
 
     private void setupTableView() throws SQLException {
+
         ResultSet resultSet = BookDatabaseHandler.getBooks();
         ObservableList<Book> book = FXCollections.observableArrayList();
-
-        String title, author, description;
-        double price;
 
         while(resultSet.next()){
             book.add(new Book(
@@ -60,19 +86,18 @@ public class UserMainScreenController {
         quantityColumn = new TableColumn<>("Quantity");
         actionColumn = new TableColumn<>("Action");
 
-        titleColumn.setCellValueFactory(new PropertyValueFactory("title"));
-        authorColumn.setCellValueFactory(new PropertyValueFactory("author"));
-        descriptionColumn.setCellValueFactory(new PropertyValueFactory("description"));
-        priceColumn.setCellValueFactory(new PropertyValueFactory("price"));
-        quantityColumn.setCellValueFactory(new PropertyValueFactory("quantity"));
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+        quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
-
-        titleColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.2));
-        authorColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.3));
-        descriptionColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.3));
-        priceColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1));
-        quantityColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1));
-
+        titleColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.15));
+        authorColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1));
+        descriptionColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.6));
+        priceColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.05));
+        quantityColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.05));
+        actionColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.08));
 
         TableColumn col_action = actionColumn;
         Callback<TableColumn<Book, String>, TableCell<Book, String>> cellFactory =
@@ -92,8 +117,7 @@ public class UserMainScreenController {
                                 } else {
                                     btn.setOnAction(event -> {
                                         Book book1 = getTableView().getItems().get(getIndex());
-                                        System.out.println(book1.getTitle()
-                                                + "   " + book1.getAuthor());
+                                        openShoppingCart(book1);
                                     });
                                     setGraphic(btn);
                                     setText(null);
@@ -104,21 +128,108 @@ public class UserMainScreenController {
                 };
         col_action.setCellFactory(cellFactory);
 
-        titleColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.115));
-        authorColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.115));
-        descriptionColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.6));
-        priceColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.05));
-        quantityColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.05));
-        actionColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1));
-
+        titleColumn.setStyle("-fx-alignment: center;");
+        authorColumn.setStyle("-fx-alignment: center;");
+        descriptionColumn.setStyle("-fx-alignment: left;");
         priceColumn.setStyle("-fx-alignment: center;");
         quantityColumn.setStyle("-fx-alignment: center;");
         actionColumn.setStyle("-fx-alignment: center;");
 
+        titleColumn.setStyle("-fx-alignment: center;");
+        authorColumn.setStyle("-fx-alignment: center;");
+        descriptionColumn.setStyle("-fx-alignment: center;");
+        priceColumn.setStyle("-fx-alignment: center;");
+        quantityColumn.setStyle("-fx-alignment: center;");
+        actionColumn.setStyle("-fx-alignment: center;");
+
+        titleColumn.setCellFactory(param -> {
+            TableCell<Book, String> cell = new TableCell<>();
+            Text text = new Text();
+            cell.setGraphic(text);
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            text.wrappingWidthProperty().bind(cell.widthProperty());
+            text.textProperty().bind(cell.itemProperty());
+            return cell ;
+        });
+
+        authorColumn.setCellFactory(param -> {
+            TableCell<Book, String> cell = new TableCell<>();
+            Text text = new Text();
+            cell.setGraphic(text);
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            text.wrappingWidthProperty().bind(cell.widthProperty());
+            text.textProperty().bind(cell.itemProperty());
+            return cell ;
+        });
+
+        descriptionColumn.setCellFactory(param -> {
+            TableCell<Book, String> cell = new TableCell<>();
+            Text text = new Text();
+            cell.setGraphic(text);
+            cell.setPrefHeight(Control.USE_COMPUTED_SIZE);
+            text.wrappingWidthProperty().bind(cell.widthProperty());
+            text.textProperty().bind(cell.itemProperty());
+            return cell ;
+        });
 
         tableView.getColumns().addAll(titleColumn, authorColumn, descriptionColumn, priceColumn, actionColumn);
         tableView.setItems(book);
 
+        FilteredList<Book> flBook = new FilteredList(book, p -> true);//Pass the data to a filtered list
+        tableView.setItems(flBook);//Set the table's items using the filtered list
+
+        searchBar.textProperty().addListener((observable, oldValue, newValue) -> flBook.setPredicate(Book -> {
+            // If filter text is empty, display all persons.
+            if (newValue == null || newValue.isEmpty()) {
+                return true;
+            }
+
+            // Get filter type from combobox
+            String filterType = filterTypeComBoBox.getSelectionModel().isEmpty() ? "Author" : filterTypeComBoBox.getValue().toString();
+            System.out.println(filterType);
+
+            // Compare first name and last name field in your object with filter.
+            String lowerCaseFilter = newValue.toLowerCase();
+
+            switch (filterType){
+                case "Author":
+                    return Book.getAuthor().toLowerCase().contains(lowerCaseFilter);
+                case "Price":
+                    return Book.getPrice().toString().contains(lowerCaseFilter);
+                case "Description":
+                    return Book.getDescription().contains(lowerCaseFilter);
+                case "Title":
+                    return Book.getTitle().contains(lowerCaseFilter);
+            }
+            return false;
+        }));
+
+        // 3. Wrap the FilteredList in a SortedList.
+        SortedList<Book> sortedData = new SortedList<>(flBook);
+        // 4. Bind the SortedList comparator to the TableView comparator.
+        sortedData.comparatorProperty().bind(tableView.comparatorProperty());
+        // 5. Add sorted (and filtered) data to the table.
+        tableView.setItems(sortedData);
+
+        filterTypeComBoBox.setButtonCell(new ListCell(){
+
+            @Override
+            protected void updateItem(Object item, boolean empty) {
+                super.updateItem(item, empty);
+                if(empty || item==null){
+                    setStyle("-fx-font-size:15");
+                    setStyle("-fx-font-family: 'Segoe UI Bold'");
+                    setStyle("-fx-alignment: 'center'");
+                } else {
+                    setStyle("-fx-font-size:15");
+                    setText(item.toString());
+                }
+            }
+
+        });
+
     }
 
+    public void logoutButtonPressed(ActionEvent actionEvent) {
+    }
 }

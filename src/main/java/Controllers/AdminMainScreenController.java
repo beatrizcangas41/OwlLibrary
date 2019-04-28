@@ -20,15 +20,10 @@ public class AdminMainScreenController {
     @FXML private TableView<Book> tableView;
     @FXML public MenuItem logoutButtonPressed;
 
-
-    @FXML private TableColumn<Book, String> titleColumn;
-    @FXML private TableColumn<Book, String> authorColumn;
-    @FXML private TableColumn<Book, String> descriptionColumn;
+    @FXML private TableColumn<Book, String> titleColumn, authorColumn, descriptionColumn;
     @FXML private TableColumn<Book, Double> priceColumn;
     @FXML private TableColumn<Book, Integer> quantityColumn;
     @FXML private TableColumn<Book, Void> actionColumn;
-
-    @FXML private Button addButton;
 
     @FXML
     public void initialize() throws SQLException {
@@ -37,7 +32,7 @@ public class AdminMainScreenController {
 
     public void logoutButtonPressed(ActionEvent actionEvent) {
         // go to normal page
-        sceneChange.sceneChangeMenuButton("fxml/loginScreenUI.fxml", menuButton);
+        sceneChange.sceneChangeMenuButton("fxml/loginScreenUI.fxml", menuButton, 1200, 800);
     }
 
     private void setupTableView() throws SQLException {
@@ -105,6 +100,16 @@ public class AdminMainScreenController {
         quantityColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.05));
         actionColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1));
 
+        titleColumn.setStyle("-fx-alignment: center;");
+        authorColumn.setStyle("-fx-alignment: center;");
+        descriptionColumn.setStyle("-fx-alignment: left;");
+        priceColumn.setStyle("-fx-alignment: center;");
+        quantityColumn.setStyle("-fx-alignment: center;");
+        actionColumn.setStyle("-fx-alignment: center;");
+
+        titleColumn.setStyle("-fx-alignment: center;");
+        authorColumn.setStyle("-fx-alignment: center;");
+        //descriptionColumn.setStyle("-fx-alignment: center;");
         priceColumn.setStyle("-fx-alignment: center;");
         quantityColumn.setStyle("-fx-alignment: center;");
         actionColumn.setStyle("-fx-alignment: center;");

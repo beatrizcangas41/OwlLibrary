@@ -98,6 +98,7 @@ public class UserDatabaseHandler {
             System.out.println("pw entered: " + password);
             return false;
         }
+
     }
 
     public static boolean verifyEmail(String username, String email) throws SQLException {

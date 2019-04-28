@@ -92,7 +92,7 @@ public class RegisterPageController {
                             else {
                                 addUser(name1, email1, uName1, pwrd1);
 
-                                sceneChange.sceneChangeButton("fxml/loginScreenUI.fxml", createAccountPressed);
+                                sceneChange.sceneChangeButton("fxml/loginScreenUI.fxml", createAccountPressed, 800, 500);
 
                             }
                         }
@@ -112,7 +112,7 @@ public class RegisterPageController {
     public void cancelButtonPressed(ActionEvent actionEvent) {
         System.out.println("Cancel Button Pressed");
 
-        sceneChange.sceneChangeButton("fxml/loginScreenUI.fxml", cancelButtonPressed);
+        sceneChange.sceneChangeButton("fxml/loginScreenUI.fxml", cancelButtonPressed, 800, 500);
 
     }
 }
