@@ -61,8 +61,8 @@ public class BookSystemTest {
                 case 3: show.displayLibraries();
                     break;
 
-                case 4: show.displayBooksPerLibrary();
-                    break;
+                // case 4: show.displayBooksPerLibrary();
+                    // break;
 
                 case 5:
                     System.out.println("Type R to Rent Book or P to purchase it");
@@ -130,7 +130,7 @@ public class BookSystemTest {
                     BookTitle = splitL.get(b);
                     Author = splitL.get(b + 1);
                     Description = splitL.get(b + 2);
-                    Series = splitL.get(b + 3);
+                    // Series = splitL.get(b + 3);
                     Price = splitL.get(b + 4);
                     price = Double.parseDouble(Price);
                     book = new Book(BookTitle, Author, Description, price);

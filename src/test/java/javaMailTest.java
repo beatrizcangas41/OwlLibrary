@@ -1,4 +1,4 @@
-import static util.JavaMailUtil.sendMail;
+import static util.JavaMail.sendMail;
 
 public class javaMailTest {
     public static void main(String[] args) throws Exception {

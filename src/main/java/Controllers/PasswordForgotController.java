@@ -3,19 +3,16 @@ package Controllers;
 import database.DatabaseConnector;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
+import util.sceneChange;
 
-import java.io.IOException;
 import java.sql.*;
 
-import static util.JavaMailUtil.*;
-import static util.emailValidatorUtil.emailValidator;
+import static util.JavaMail.getToken;
+import static util.JavaMail.sendMail;
+import static util.emailValidator.emailValidator;
 
 
 public class PasswordForgotController {
@@ -108,20 +105,8 @@ public class PasswordForgotController {
 
                                 System.out.println("Confirmation Sent");
 
-                                Stage stage = (Stage) confirmEmail.getScene().getWindow();
-                                stage.close();
+                                sceneChange.sceneChangeButton("fxml/PasswordResetUI.fxml", confirmEmail);
 
-                                try {
-                                    Object page = FXMLLoader.load(PasswordForgotController.class.getClassLoader().getResource("fxml/PasswordResetUI.fxml"));
-                                    Scene newScene = new Scene((Parent) page, 900, 500);
-
-                                    Stage newStage = new Stage();
-                                    newStage.setScene(newScene);
-                                    newStage.show();
-
-                                } catch (IOException e) {
-                                    e.printStackTrace();
-                                }
                             } else {
                                 System.out.print("The Email address " + emailEntered1 + " isn't valid");
 
@@ -147,18 +132,9 @@ public class PasswordForgotController {
     }
 
     @FXML
-    void goBackButton(ActionEvent actionEvent) throws IOException {
+    void goBackButton(ActionEvent actionEvent) {
         System.out.println("Go Back Button Pressed");
 
-        Stage stage = (Stage) goBackButton.getScene().getWindow();
-        stage.close();
-
-        Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/loginScreenUI.fxml"));
-
-        Scene newScene = new Scene((Parent) page, 900, 500);
-        Stage newStage = new Stage();
-
-        newStage.setScene(newScene);
-        newStage.show();
+        sceneChange.sceneChangeButton("fxml/loginScreenUI.fxml", goBackButton);
     }
 }

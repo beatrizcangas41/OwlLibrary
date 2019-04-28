@@ -6,7 +6,7 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 import java.util.UUID;
 
-public class JavaMailUtil {
+public class JavaMail {
 
     private Session mailSession;
     private static String subject;

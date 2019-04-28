@@ -16,7 +16,7 @@
 <GridPane alignment="center" cache="true" cacheHint="QUALITY" hgap="5.0" style="-fx-border-color: #ffcc99;
           -fx-background-color: radial-gradient(center 50% 50% , radius 180%, #ffece6, #8cd1d1);"
           vgap="5.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="Controllers.AccountRegisterController">
+          fx:controller="Controllers.RegisterPageController">
 
     <rowConstraints>
         <RowConstraints minHeight="10.0" prefHeight="30.0"/>

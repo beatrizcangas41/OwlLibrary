@@ -15,7 +15,6 @@ import java.util.ArrayList;
 public class Display extends Application {
 
     private ArrayList<Book> books = new ArrayList<>();
-    //public LinkedList<Book> books = new LinkedList<Book>();
     public ArrayList<Library> lib = new ArrayList<>();
 
     @Override
@@ -38,9 +37,43 @@ public class Display extends Application {
 
     }
 
-    public void addBookToList(Book book)
-    {
+    public void addBookToList(Book book) {
         books.add(book);
+    }
+
+    public void removeBook(String rent) {
+        for (Book book : books) {
+            if (book.getTitle().contains(rent)) {
+                System.out.println(book.toString());
+                if (Book.getQuantity() != 0) {
+                    book.setQuantity(1);
+                } else {
+                    Book.availability = false;
+                }
+            } else if (book.getAuthor().contains(rent)) {
+                System.out.println("Author: " + book.getAuthor() + "\t\t\tAuthor from String: " + rent);
+                System.out.println("\n" + book.toString());
+                if (Book.getQuantity() != 0) {
+                    book.setQuantity(1);
+                } else {
+                    Book.availability = false;
+                }
+            }
+            /*
+            else if (book.getSeries().contains(rent)) {
+                System.out.println("Series: " + book.getSeries() + "\t\t\tSeries from String: " + rent);
+                System.out.println("\n" + book.toString());
+                if (book.getQuantity() != 0) {
+                    book.setQuantity(1);
+                } else {
+                    book.availability = false;
+                }
+            }*/
+
+            else {
+                System.out.println();
+            }
+        }
     }
 
     public void displayBookInfo(String title) {
@@ -77,17 +110,6 @@ public class Display extends Application {
         }
     }
 
-    public void displayBooksPerLibrary() {
-        System.out.println("Book Per Library");
-        for (model.Library libraries : lib) {
-            System.out.println("\n" + libraries.toString() + "\n\t");
-            for (Book book : books) {
-                book.setLibrary(libraries.toString());
-                //books.add(books.get(a));
-                System.out.println(book.toString());
-            }
-        }
-    }
 
     public void displayLibraries() {
         System.out.println("Library in List: \n");
@@ -96,59 +118,10 @@ public class Display extends Application {
         }
     }
 
-    public void removeBook(String rent) {
-        for (Book book : books) {
-            if (book.getTitle().contains(rent)) {
-                System.out.println(book.toString());
-                if (book.getQuantity() != 0) {
-                    book.setQuantity(1);
-                } else {
-                    book.availability = false;
-                }
-            } else if (book.getAuthor().contains(rent)) {
-                System.out.println("Author: " + book.getAuthor() + "\t\t\tAuthor from String: " + rent);
-                System.out.println("\n" + book.toString());
-                if (book.getQuantity() != 0) {
-                    book.setQuantity(1);
-                } else {
-                    book.availability = false;
-                }
-            }
-            /*
-            else if (book.getSeries().contains(rent)) {
-                System.out.println("Series: " + book.getSeries() + "\t\t\tSeries from String: " + rent);
-                System.out.println("\n" + book.toString());
-                if (book.getQuantity() != 0) {
-                    book.setQuantity(1);
-                } else {
-                    book.availability = false;
-                }
-            }*/
-
-            else {
-                System.out.println();
-            }
-        }
-
-
-    }
-
-    public void displayBooksInCart(Cart cart)
-    {
+    public void displayBooksInCart(Cart cart) {
         cart.toString();
     }
 
-    public void displayOrderSummary() {
-        //displayBooksInCart();
-    }
-
-    public void displayShippingInfo() {
-        //hello
-    }
-
-    public void displayReceipt() {
-        //hello
-    }
 
     public static void main(String[] args) {
         launch(args);

@@ -1,4 +1,4 @@
-package Controllers;
+package util;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -42,8 +42,7 @@ public class hello extends Application  {
         stage.show();
     }
 
-    private void buttonClick(ActionEvent event)
-    {
+    private void buttonClick(ActionEvent event) {
         // Counts number of button clicks and shows the result on a label
         // for (int i = 0; i < Book.getQuantity(); i++) {
             count = count + 1;

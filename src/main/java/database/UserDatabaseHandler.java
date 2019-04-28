@@ -5,7 +5,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.sql.*;
 
-import static util.JavaMailUtil.getToken;
+import static util.JavaMail.getToken;
 
 public class UserDatabaseHandler {
     private static Connection connection = DatabaseConnector.getConnection();
@@ -34,7 +34,7 @@ public class UserDatabaseHandler {
         password = BCrypt.hashpw(password, BCrypt.gensalt());
 
         s.executeUpdate("INSERT INTO `user`(name, email, username, password)" +
-                " VALUE ('" + name + "' , '" + email + "', '" + username + "', '" + password.hashCode() + "')");
+                " VALUE ('" + name + "' , '" + email + "', '" + username + "', '" + password + "')");
     }
 
     public static boolean userExists (String username) throws SQLException {
@@ -45,23 +45,32 @@ public class UserDatabaseHandler {
 
         String uName = null;
 
-        try {
-            while (results.next()) {
-                uName = results.getString("username");
-                System.out.println("username: " + username);
-            }
+        System.out.println("username: " + username);
+        System.out.println("dbUname: " + uName);
+
+
+        while (results.next()) {
+            uName = results.getString("username");
+
+            System.out.println("username: " + username);
+            System.out.println("dbUname: " + uName);
+        }
+        if (uName != null && username != null) {
             if (uName.equals(username)) {
                 System.out.println("User exists");
                 return true;
             } else {
                 System.out.println("User does NOT exists");
+
+                System.out.println("username: " + username);
+                System.out.println("dbUname: " + uName);
                 return false;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
         }
 
-        return uName.equals(username);
+        else System.out.println("User does NOT exists");
+
+        return username.equals(uName);
     }
 
     public static boolean verifyLoginCredentials (String username, String password) throws SQLException {
@@ -74,32 +83,21 @@ public class UserDatabaseHandler {
 
         String dbPassword = null;
 
-        try {
-            while (results.next()) {
-                dbPassword = results.getString("password");
-                System.out.println("db pw: " + dbPassword);
-                System.out.println("pw entered: " + password);
-            }
-
-
-            if (BCrypt.checkpw(password, dbPassword)) {
-                System.out.println("It matches");
-                return true;
-            }
-
-            else {
-                System.out.println("It does not match");
-                System.out.println("db pw: " + dbPassword);
-                System.out.println("pw entered: " + password);
-                return false;
-            }
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+        while (results.next()) {
+            dbPassword = results.getString("password");
+            System.out.println("db pw: " + dbPassword);
+            System.out.println("pw entered: " + password);
         }
 
-        return password.equals(dbPassword);
+        if (BCrypt.checkpw(password, dbPassword)) {
+            System.out.println("It matches");
+            return true;
+        } else {
+            System.out.println("It does not match");
+            System.out.println("db pw: " + dbPassword);
+            System.out.println("pw entered: " + password);
+            return false;
+        }
     }
 
     public static boolean verifyEmail(String username, String email) throws SQLException {

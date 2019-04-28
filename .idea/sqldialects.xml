@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
-    <file url="file://$PROJECT_DIR$/src/main/java/Controllers/AccountRegisterController.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/Controllers/PasswordForgotController.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/Controllers/PasswordResetController.java" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/Controllers/RegisterPageController.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/Controllers/loginScreenController.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/database/BookDatabaseHandler.java" dialect="MySQL" />
     <file url="file://$PROJECT_DIR$/src/main/java/database/UserDatabaseHandler.java" dialect="MySQL" />
-    <file url="file://$PROJECT_DIR$/src/main/java/util/JavaMailUtil.java" dialect="MySQL" />
+    <file url="file://$PROJECT_DIR$/src/main/java/util/JavaMail.java" dialect="MySQL" />
   </component>
 </project>

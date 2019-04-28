@@ -1,4 +1,4 @@
-import static util.JavaMailUtil.pwrdGenerator;
+import static util.JavaMail.pwrdGenerator;
 
 public class tokenGeneratorTest {
 

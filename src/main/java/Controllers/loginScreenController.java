@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import util.sceneChange;
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -43,7 +44,6 @@ public class loginScreenController {
         String pwrd = passwordField.getText();
 
         try {
-            boolean credentials = UserDatabaseHandler.verifyLoginCredentials(uName, pwrd);
 
             if (!UserDatabaseHandler.verifyLoginCredentials(uName, pwrd)){
                 displayErrorDialog("Input not valid", "Wrong Username or Password");
@@ -54,20 +54,8 @@ public class loginScreenController {
                if (user_type.equals("Admin")) {
                    System.out.println("Admin Page");
 
-                   try {
-                       Stage stage = (Stage) loginButtonPressed.getScene().getWindow();
-                       stage.close();
+                   sceneChange.sceneChangeButton("fxml/AdminMainScreenUI.fxml", loginButtonPressed);
 
-                       Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AdminMainScreenUI.fxml"));
-                       Scene newScene = new Scene((Parent) page, 1200, 800);
-
-                       Stage newStage = new Stage();
-                       newStage.setScene(newScene);
-                       newStage.show();
-
-                   } catch (IOException e) {
-                       e.printStackTrace();
-                   }
                }
 
                else if (user_type.equals("User")) {
@@ -75,22 +63,8 @@ public class loginScreenController {
 
                    System.out.println("User Page");
 
-                   loginStage.close();
+                   sceneChange.sceneChangeButton("fxml/UserMainScreenUI.fxml", loginButtonPressed);
 
-                   try {
-                       Stage stage = (Stage) loginButtonPressed.getScene().getWindow();
-                       stage.close();
-
-                       Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/UserMainScreenUI.fxml"));
-                       Scene newScene = new Scene((Parent) page, 1200, 800);
-
-                       Stage newStage = new Stage();
-                       newStage.setScene(newScene);
-                       newStage.show();
-
-                   } catch (IOException e) {
-                       e.printStackTrace();
-                   }
                }
 
                else displayErrorDialog("Error", "The user has not been classified ");
@@ -199,35 +173,15 @@ public class loginScreenController {
         }
     }
 
-    public void registerButtonPressed(ActionEvent actionEvent) throws IOException {
+    public void registerButtonPressed(ActionEvent actionEvent) {
 
         System.out.println("The account page has been loaded");
-
-        Stage stage = (Stage) registerButtonPressed.getScene().getWindow();
-        stage.close();
-
-        Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/AccountScreenUI.fxml"));
-
-        Scene newScene = new Scene((Parent) page, 900, 500);
-        Stage newStage = new Stage();
-
-        newStage.setScene(newScene);
-        newStage.show();
+        sceneChange.sceneChangeButton("fxml/AccountScreenUI.fxml", registerButtonPressed);
     }
 
 
-    public void forgotPasswordButtonPressed(ActionEvent actionEvent) throws IOException {
+    public void forgotPasswordButtonPressed(ActionEvent actionEvent) {
         System.out.println("The account page has been loaded");
-
-        Stage stage = (Stage) registerButtonPressed.getScene().getWindow();
-        stage.close();
-
-        Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ForgotPasswordUI.fxml"));
-
-        Scene newScene = new Scene((Parent) page, 900, 500);
-        Stage newStage = new Stage();
-
-        newStage.setScene(newScene);
-        newStage.show();
+        sceneChange.sceneChangeButton("fxml/ForgotPasswordUI.fxml", registerButtonPressed);
     }
 }

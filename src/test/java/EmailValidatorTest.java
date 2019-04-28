@@ -1,4 +1,4 @@
-import static util.emailValidatorUtil.emailValidator;
+import static util.emailValidator.emailValidator;
 
 public class EmailValidatorTest {
 

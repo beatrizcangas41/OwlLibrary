@@ -5,27 +5,20 @@ import database.DatabaseConnector;
 import database.UserDatabaseHandler;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import util.dialogCreator;
+import util.sceneChange;
 
-import java.io.IOException;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.sql.Statement;
 
-public class AccountRegisterController {
+import static database.UserDatabaseHandler.*;
+import static util.emailValidator.emailValidator;
+
+public class RegisterPageController {
 
     private UserDatabaseHandler userDatabaseHandler;
-
-    @FXML
-    public void initialize() {
-        userDatabaseHandler = new UserDatabaseHandler();
-    }
 
     @FXML
     private Button createAccountPressed, cancelButtonPressed;
@@ -34,7 +27,7 @@ public class AccountRegisterController {
     private TextField nameTextField1, emailTextField1, emailTextField2,
                       usernameTextField1, passwordField1, passwordField2;
 
-    public void createAccountPressed() throws SQLException {
+    public void createAccountPressed() {
         Connection connection = DatabaseConnector.getConnection();
         Statement stmt2 = null;
 
@@ -72,43 +65,36 @@ public class AccountRegisterController {
                 if (connection != null) {
                     System.out.println("Connection Successful");
 
-                    boolean userExists = UserDatabaseHandler.userExists(uName1);
-                    boolean verifyEmail = UserDatabaseHandler.verifyEmail(uName1, email1);
-
                     try {
-                        if (userExists || verifyEmail) {
-                            if (userExists && verifyEmail) {
+                        if (userExists(uName1) || verifyEmail(uName1, email1)) {
+                            if (userExists(uName1) && verifyEmail(uName1, email1)) {
                                 String message = "Username and email already taken. Please try again. ";
                                 dialogCreator.displayErrorDialog("Input not valid", message);
                             }
 
-                            else if (userExists) {
+                            else if (userExists(uName1)) {
                                 String message = "Username already taken. Please try again. ";
                                 dialogCreator.displayErrorDialog("Input not valid", message);
                             }
-                            else if(verifyEmail) {
+
+                            else if(verifyEmail(uName1, email1)) {
                                 String message = "Email already taken. Please try again. ";
                                 dialogCreator.displayErrorDialog("Input not valid", message);
                             }
                         }
 
                         else {
+                            if (!emailValidator(email1)) {
+                                String message = "Invalid email, wrong format. Please try again. ";
+                                dialogCreator.displayErrorDialog("Input not valid", message);
+                            }
 
-                            UserDatabaseHandler.addUser(name1, email1, uName1, pwrd1);
+                            else {
+                                addUser(name1, email1, uName1, pwrd1);
 
-                            System.out.println("The account was inserted in the database. ");
+                                sceneChange.sceneChangeButton("fxml/loginScreenUI.fxml", createAccountPressed);
 
-                            Stage stage = (Stage) createAccountPressed.getScene().getWindow();
-                            stage.close();
-
-                            Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/loginScreenUI.fxml"));
-
-                            Scene newScene = new Scene((Parent) page, 900, 500);
-                            Stage newStage = new Stage();
-
-                            newStage.setScene(newScene);
-
-                            newStage.show();
+                            }
                         }
                     } catch (Exception e) {
                         e.printStackTrace();
@@ -123,18 +109,10 @@ public class AccountRegisterController {
         }
     }
 
-    public void cancelButtonPressed(ActionEvent actionEvent) throws IOException {
+    public void cancelButtonPressed(ActionEvent actionEvent) {
         System.out.println("Cancel Button Pressed");
 
-        Stage stage = (Stage) cancelButtonPressed.getScene().getWindow();
-        stage.close();
+        sceneChange.sceneChangeButton("fxml/loginScreenUI.fxml", cancelButtonPressed);
 
-        Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/loginScreenUI.fxml"));
-
-        Scene newScene = new Scene((Parent) page, 900, 500);
-        Stage newStage = new Stage();
-
-        newStage.setScene(newScene);
-        newStage.show();
     }
 }

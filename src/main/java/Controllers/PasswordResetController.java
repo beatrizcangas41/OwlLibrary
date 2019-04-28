@@ -3,15 +3,11 @@ package Controllers;
 import database.DatabaseConnector;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
-import javafx.stage.Stage;
 import org.springframework.security.crypto.bcrypt.BCrypt;
+import util.sceneChange;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -67,25 +63,11 @@ public class PasswordResetController {
                     pstmt1.setString(2, token1);
 
                     if (!pstmt1.execute()) {
-                        try {
-                            System.out.println("password updated");
 
-                            displayInformationDialog("Confirmation", "your password is been updated. ");
+                        System.out.println("password updated");
+                        displayInformationDialog("Confirmation", "your password is been updated. ");
 
-
-                            Stage stage = (Stage) confirmPassword.getScene().getWindow();
-                            stage.close();
-
-                            Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/loginScreenUI.fxml"));
-                            Scene newScene = new Scene((Parent) page, 900, 500);
-
-                            Stage newStage = new Stage();
-                            newStage.setScene(newScene);
-                            newStage.show();
-
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
+                        sceneChange.sceneChangeButton("fxml/loginScreenUI.fxml", confirmPassword);
                     }
                 }
             }
@@ -93,38 +75,14 @@ public class PasswordResetController {
             else {
                 displayErrorDialog("Input not valid", "Verify your credentials. Please try again. ");
 
-                try {
-                    Stage stage = (Stage) confirmPassword.getScene().getWindow();
-                    stage.close();
-
-                    Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/ForgotPasswordUI.fxml"));
-
-                    Scene newScene = new Scene((Parent) page, 900, 500);
-                    Stage newStage = new Stage();
-
-                    newStage.setScene(newScene);
-                    newStage.show();
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                sceneChange.sceneChangeButton("fxml/ForgotPasswordUI.fxml", confirmPassword);
             }
-
         }
     }
 
-    public void cancelButton(ActionEvent actionEvent) throws IOException {
+    public void cancelButton(ActionEvent actionEvent) {
         System.out.println("Go Back Button Pressed");
 
-        Stage stage = (Stage) cancelButton.getScene().getWindow();
-        stage.close();
-
-        Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/loginScreenUI.fxml"));
-
-        Scene newScene = new Scene((Parent) page, 900, 500);
-        Stage newStage = new Stage();
-
-        newStage.setScene(newScene);
-        newStage.show();
+        sceneChange.sceneChangeButton("fxml/loginScreenUI.fxml", cancelButton);
     }
 }

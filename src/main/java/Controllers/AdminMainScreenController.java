@@ -5,26 +5,21 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 import javafx.util.Callback;
 import model.Book;
+import util.sceneChange;
 
-import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class AdminMainScreenController {
 
+    @FXML private MenuButton menuButton;
     @FXML private TableView<Book> tableView;
+    @FXML public MenuItem logoutButtonPressed;
+
 
     @FXML private TableColumn<Book, String> titleColumn;
     @FXML private TableColumn<Book, String> authorColumn;
@@ -42,19 +37,7 @@ public class AdminMainScreenController {
 
     public void logoutButtonPressed(ActionEvent actionEvent) {
         // go to normal page
-        Stage mainStage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        mainStage.close();
-
-        try {
-            GridPane gridPane = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/loginScreenUI.fxml"));
-            Scene newScene = new Scene(gridPane);
-            Stage newStage = new Stage();
-            newStage.setScene(newScene);
-            newStage.show();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        sceneChange.sceneChangeMenuButton("fxml/loginScreenUI.fxml", menuButton);
     }
 
     private void setupTableView() throws SQLException {
@@ -115,9 +98,9 @@ public class AdminMainScreenController {
                 };
         col_action.setCellFactory(cellFactory);
 
-        titleColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.185));
-        authorColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1));
-        descriptionColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.5));
+        titleColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.115));
+        authorColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.115));
+        descriptionColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.6));
         priceColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.05));
         quantityColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.05));
         actionColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1));
