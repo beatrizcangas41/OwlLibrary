@@ -1,0 +1,5 @@
+Instructions:
+
+1. Download WAMP Server or any other similar application so you can import the .sql file which 
+   contains the tables 
+2. When loading project, make sure it is a maven project.
