@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Apr 28, 2019 at 07:58 PM
+-- Generation Time: May 01, 2019 at 03:02 AM
 -- Server version: 5.7.24
 -- PHP Version: 7.2.14
 
@@ -35,8 +35,8 @@ CREATE TABLE IF NOT EXISTS `book` (
   `description` text NOT NULL,
   `price` double NOT NULL,
   `bookID` int(10) NOT NULL AUTO_INCREMENT,
-  PRIMARY KEY (`bookID`)
-) ENGINE=MyISAM AUTO_INCREMENT=670 DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`bookID`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=671 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `book`
@@ -713,7 +713,8 @@ INSERT INTO `book` (`title`, `author`, `description`, `price`, `bookID`) VALUES
 ('An ember in the ashes', 'Tahir, Sabaa', '\"Laia is a Scholar living under the iron-fisted rule of the Martial Empire. When her brother is arrested for treason, Laia goes undercover as a slave at the empire\'s greatest military academy in exchange for assistance from rebel Scholars who claim t', 27.35, 666),
 ('Furyborn', 'Legrand, Claire, 1986-', 'Rielle may prove to be one of the Prophesized Queens, if she survives the trials, and a thousand years later bounty hunter Eliana helps a girl who could be the answer to the prophecy.', 27.35, 667),
 ('Runebinder', 'Kahler, A. R.', 'When magic returned to the world, it could have saved humanity, but greed and thirst for power caused mankind’s downfall instead. Now once-human monsters called Howls prowl abandoned streets, their hunger guided by corrupt necromancers and the all-po', 27.35, 668),
-('Riese: kingdom falling', 'Cox, Greg, 1959-', 'When Princess Riese meets Micah, a mysterious wandering artist, she pretends to be a peasant for a chance at being a normal girl, while the clockwork Sect infiltrates the court and grows stronger.', 27.35, 669);
+('Riese: kingdom falling', 'Cox, Greg, 1959-', 'When Princess Riese meets Micah, a mysterious wandering artist, she pretends to be a peasant for a chance at being a normal girl, while the clockwork Sect infiltrates the court and grows stronger.', 27.35, 669),
+('a', 'a', 'a', 15, 670);
 
 -- --------------------------------------------------------
 
@@ -723,17 +724,22 @@ INSERT INTO `book` (`title`, `author`, `description`, `price`, `bookID`) VALUES
 
 DROP TABLE IF EXISTS `order_info`;
 CREATE TABLE IF NOT EXISTS `order_info` (
+  `username` varchar(100) NOT NULL,
+  `bookID` varchar(100) NOT NULL,
+  `bookTitle` varchar(100) NOT NULL,
+  `shipping_address` varchar(100) NOT NULL,
+  `orderDate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `orderID` int(10) NOT NULL AUTO_INCREMENT,
-  `order_number` int(10) NOT NULL,
-  `order_status` enum('On_Hold','Shipped','Processing','Delivered','Returned','Closed') NOT NULL,
-  `order_date` datetime NOT NULL,
-  `shipped_address` varchar(100) NOT NULL,
-  `order_total` double NOT NULL,
-  `order_details` varchar(500) NOT NULL,
-  PRIMARY KEY (`orderID`),
-  UNIQUE KEY `order_number` (`order_number`),
-  KEY `shipped_address` (`shipped_address`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`orderID`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `order_info`
+--
+
+INSERT INTO `order_info` (`username`, `bookID`, `bookTitle`, `shipping_address`, `orderDate`, `orderID`) VALUES
+('s', 'null', '[Redemption, The first lady, The Cornwalls are gone]', '42 Meadows Dr, Boynton Beach, Fl 33436', '2019-04-30 08:02:58', 17),
+('s', 'null', '[Transformers: Lost light. 4]', 'sa', '2019-04-30 16:21:00', 20);
 
 -- --------------------------------------------------------
 
@@ -752,20 +758,21 @@ CREATE TABLE IF NOT EXISTS `user` (
   `username` varchar(50) NOT NULL,
   `password` varchar(64) NOT NULL,
   `token` char(36) DEFAULT NULL,
-  `address` varchar(100) DEFAULT NULL,
-  PRIMARY KEY (`userID`),
+  `address` varchar(100) DEFAULT 'address 123 ',
+  PRIMARY KEY (`userID`) USING BTREE,
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=MyISAM AUTO_INCREMENT=50 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=52 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `user`
 --
 
 INSERT INTO `user` (`userID`, `user_status`, `createdOn`, `name`, `email`, `user_type`, `username`, `password`, `token`, `address`) VALUES
-(1, b'1', '2019-04-20 21:27:07', 'Beatriz Cangas Perez', 'bcangasperez2017@fau.edu', 'Admin', 'admin_Beatriz', '$2a$10$x7fm6TdDtNTG/Y8aVe4twuzka2pdsO2wxjr6uvGZbKAk6zDA3hw7a', 'b0f9e2c5-d8ae-4d42-9c54-9aa2aca3f00d', '42 Meadows Dr, Boynton Beach, Fl 33436'),
-(49, b'1', '2019-04-27 19:47:40', 's', 's', 'User', 's', '$2a$10$zrn1AP7kBthfr3CDGUFWGe/K2U6.phtoy9p.u1nVNt8lYRL.Foz9O', NULL, NULL),
-(48, b'1', '2019-04-27 19:45:32', 'a', 'a', 'User', 'a', '$2a$10$6CNA1bs9rbAXtXfcPTuVgOfwd5vBapNa/f5KzzqFwM2g6a0TY8GWm', NULL, NULL);
+(1, b'1', '2019-04-20 21:27:07', 'Beatriz Cangas Perez', 'bcangasperez2017@fau.edu', 'Admin', 'admin_Beatriz', '$2a$10$/I1c23CKKHl6QLxfLnhpVOAR1PelV8B0XMyqLnJfKzodK/SlKNCKe', '5f2729bb-2c10-49b3-80a4-8a3dbdc2f489', '42 Meadows Dr, Boynton Beach, Fl 33436'),
+(49, b'1', '2019-04-27 19:47:40', 's', 's', 'User', 's', '$2a$10$zrn1AP7kBthfr3CDGUFWGe/K2U6.phtoy9p.u1nVNt8lYRL.Foz9O', NULL, 'sa'),
+(50, b'1', '2019-04-30 21:24:56', 'w', 'w@gmail.com', 'User', 'w', '$2a$10$fpPWOqK3gtutflIyN/rL1uhVsswkSQdk4AnjIPXshycLUUlfXld3u', NULL, 's'),
+(51, b'1', '2019-04-30 21:51:30', 'q', 'q@test.com', 'User', 'q', '$2a$10$tQ/KEMkfli0WdTND/g1HVeDor4EzcbUTd0eETeQvcnaTWWndf5KzK', NULL, NULL);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
