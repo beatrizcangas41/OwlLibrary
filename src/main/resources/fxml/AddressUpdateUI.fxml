@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.Cursor?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.effect.ColorAdjust?>
+<?import javafx.scene.effect.Reflection?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<GridPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.AddressUpdateController">
+
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" />
+        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="10.0" />
+        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="10.0" />
+        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="40.0" />
+        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="10.0" />
+        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="40.0" />
+        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="10.0" />
+        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="40.0" />
+        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="30.0" />
+        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="40.0" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+    </rowConstraints>
+
+    <columnConstraints>
+        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints />
+    </columnConstraints>
+
+    <TextField fx:id="current" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="current address" style="-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" GridPane.columnIndex="2" GridPane.columnSpan="6" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="9" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+        <GridPane.margin>
+            <Insets left="60.0" right="50.0" />
+        </GridPane.margin>
+        <cursor>
+            <Cursor fx:constant="DEFAULT" />
+        </cursor>
+    </TextField>
+    <TextField fx:id="new1" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="new address" style="-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" GridPane.columnIndex="2" GridPane.columnSpan="6" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="11" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+        <GridPane.margin>
+            <Insets left="60.0" right="50.0" />
+        </GridPane.margin>
+        <cursor>
+            <Cursor fx:constant="DEFAULT" />
+        </cursor>
+    </TextField>
+    <TextField fx:id="new2" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" promptText="confirm new address" style="-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" GridPane.columnIndex="2" GridPane.columnSpan="6" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="13" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+        <GridPane.margin>
+            <Insets left="60.0" right="50.0" />
+        </GridPane.margin>
+        <cursor>
+            <Cursor fx:constant="DEFAULT" />
+        </cursor></TextField>
+
+
+    <Button fx:id="submitAddress" cache="true" cacheHint="QUALITY" defaultButton="true" graphicTextGap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#submitAddress" style="-fx-background-color: #f49271;             -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" text="UPDATE ADDRESS" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" GridPane.columnIndex="2" GridPane.columnSpan="6" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="15" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+        <GridPane.margin>
+            <Insets left="60.0" right="50.0" />
+        </GridPane.margin>
+        <font>
+            <Font name="Segoe UI Bold" size="18.0" />
+        </font>
+        <cursor>
+            <Cursor fx:constant="HAND" />
+        </cursor>
+    </Button>
+    <ImageView fitHeight="87.0" fitWidth="220.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="5" GridPane.valignment="BOTTOM" GridPane.vgrow="NEVER">
+        <GridPane.margin>
+            <Insets right="10.0" top="10.0" />
+        </GridPane.margin>
+        <Image url="@../images/logo_transparent_background.png" />
+        <effect>
+            <Reflection fraction="0.56" topOffset="-10.0" />
+        </effect>
+    </ImageView>
+    <ImageView fitHeight="30.0" fitWidth="60.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.hgrow="NEVER" GridPane.rowIndex="9" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+        <Image url="@../images/address2.png" />
+        <GridPane.margin>
+            <Insets left="20.0" />
+        </GridPane.margin>
+        <effect>
+            <ColorAdjust brightness="0.34" contrast="0.26" hue="-0.02" saturation="-0.17" />
+        </effect>
+    </ImageView>
+    <ImageView fitHeight="30.0" fitWidth="60.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.hgrow="NEVER" GridPane.rowIndex="11" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+        <Image url="@../images/address1.png" />
+        <GridPane.margin>
+            <Insets left="20.0" />
+        </GridPane.margin>
+        <effect>
+            <ColorAdjust brightness="0.2" hue="-0.05" saturation="-0.15" />
+        </effect>
+    </ImageView>
+    <Button fx:id="cancelButton" cache="true" cacheHint="QUALITY" graphicTextGap="5.0" layoutX="116.0" layoutY="391.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#cancelButton" style="-fx-background-color: #008080; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" text="CANCEL" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS" GridPane.columnIndex="3" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="16" GridPane.rowSpan="2" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+        <font>
+            <Font name="Segoe UI Bold" size="16.0" />
+        </font>
+        <cursor>
+            <Cursor fx:constant="HAND" />
+        </cursor>
+        <GridPane.margin>
+            <Insets bottom="20.0" left="50.0" right="50.0" top="20.0" />
+        </GridPane.margin>
+    </Button>
+    <ImageView fitHeight="30.0" fitWidth="60.0" layoutX="131.0" layoutY="186.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.hgrow="NEVER" GridPane.rowIndex="13" GridPane.vgrow="NEVER">
+        <effect>
+            <ColorAdjust brightness="0.2" hue="-0.05" saturation="-0.15" />
+        </effect>
+        <GridPane.margin>
+            <Insets left="20.0" />
+        </GridPane.margin>
+        <Image url="@../images/address1.png" />
+    </ImageView>
+    <cursor>
+        <Cursor fx:constant="DEFAULT" />
+    </cursor>
+    <opaqueInsets>
+        <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+    </opaqueInsets>
+
+</GridPane>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.effect.Reflection?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+<GridPane prefHeight="364.0" prefWidth="602.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.RemoveBookController">
+
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="40.0" />
+        <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="10.0" />
+        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="40.0" />
+      <RowConstraints maxHeight="20.0" minHeight="10.0" prefHeight="40.0" />
+        <RowConstraints maxHeight="1.7976931348623157E308" minHeight="10.0" prefHeight="40.0" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" />
+        <RowConstraints minHeight="10.0" prefHeight="30.0" />
+      <RowConstraints maxHeight="30.0" minHeight="10.0" prefHeight="10.0" />
+    </rowConstraints>
+
+    <columnConstraints>
+        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints minWidth="10.0" prefWidth="100.0" />
+        <ColumnConstraints />
+    </columnConstraints>
+
+    <TextField fx:id="titleTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" promptText="title" style="-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="4" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+        <GridPane.margin>
+            <Insets left="60.0" right="50.0" />
+        </GridPane.margin>
+    </TextField>
+    <TextField fx:id="authorTextField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" nodeOrientation="LEFT_TO_RIGHT" promptText="author" style="-fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" GridPane.columnIndex="2" GridPane.columnSpan="4" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="6" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+        <GridPane.margin>
+            <Insets left="60.0" right="50.0" />
+        </GridPane.margin>
+    </TextField>
+
+    <Button fx:id="removeButtonPressed" cache="true" cacheHint="QUALITY" defaultButton="true" graphicTextGap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#removeButtonPressed" prefWidth="155.0" style="-fx-background-color: #f49271;             -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" text="REMOVE BOOK" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" GridPane.columnIndex="1" GridPane.columnSpan="5" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="8" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+        <GridPane.margin>
+            <Insets bottom="20.0" left="60.0" right="50.0" top="20.0" />
+        </GridPane.margin>
+        <font>
+            <Font name="Segoe UI Bold" size="18.0" />
+        </font>
+        <cursor>
+            <Cursor fx:constant="HAND" />
+        </cursor>
+    </Button>
+
+    <ImageView fitHeight="87.0" fitWidth="240.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.hgrow="NEVER" GridPane.rowIndex="1" GridPane.valignment="CENTER" GridPane.vgrow="NEVER">
+        <GridPane.margin>
+            <Insets right="10.0" top="10.0" />
+        </GridPane.margin>
+        <Image url="@../images/logo_transparent_background.png" />
+        <effect>
+            <Reflection fraction="0.5" topOffset="-10.0" />
+        </effect>
+    </ImageView>
+
+    <Button fx:id="cancelButtonPressed" cache="true" cacheHint="QUALITY" graphicTextGap="5.0" layoutX="116.0" layoutY="391.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" onAction="#cancelButtonPressed" prefWidth="155.0" style="-fx-background-color: #f49271; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" text="CANCEL" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" GridPane.columnIndex="2" GridPane.columnSpan="3" GridPane.rowIndex="9" GridPane.rowSpan="2">
+        <font>
+            <Font name="Segoe UI Bold" size="14.0" />
+        </font>
+        <cursor>
+            <Cursor fx:constant="HAND" />
+        </cursor>
+        <GridPane.margin>
+            <Insets bottom="20.0" left="50.0" right="50.0" top="20.0" />
+        </GridPane.margin>
+    </Button>
+   <Button fx:id="titleButton" cache="true" cacheHint="QUALITY" defaultButton="true" graphicTextGap="5.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="18.0" prefWidth="140.0" style="-fx-background-color: #008080; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" text="TITLE" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4">
+      <font>
+         <Font name="Segoe UI Bold" size="14.0" />
+      </font>
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+      <GridPane.margin>
+         <Insets left="50.0" right="30.0" />
+      </GridPane.margin>
+   </Button>
+   <Button fx:id="authorButton" cache="true" cacheHint="QUALITY" defaultButton="true" graphicTextGap="5.0" layoutX="96.0" layoutY="130.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="18.0" prefWidth="140.0" style="-fx-background-color: #008080; -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );" text="AUTHOR" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_ELLIPSIS" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="6">
+      <font>
+         <Font name="Segoe UI Bold" size="14.0" />
+      </font>
+      <cursor>
+         <Cursor fx:constant="HAND" />
+      </cursor>
+      <GridPane.margin>
+         <Insets left="50.0" right="30.0" />
+      </GridPane.margin>
+   </Button>
+
+    <cursor>
+        <Cursor fx:constant="DEFAULT" />
+    </cursor>
+
+    <opaqueInsets>
+        <Insets bottom="50.0" left="50.0" right="50.0" top="50.0" />
+    </opaqueInsets>
+</GridPane>
