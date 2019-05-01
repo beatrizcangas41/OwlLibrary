@@ -45,9 +45,7 @@ public class AddressUpdateController {
         String uName = username.getText();
 
         if (address1.equals(address2)) {
-
             try {
-
                 updateAddress(address1, uName);
                 address = getAddressFromUsername(uName);
 
@@ -58,7 +56,9 @@ public class AddressUpdateController {
                     Stage stage = (Stage) submitAddress.getScene().getWindow();
                     stage.close();
                 } else displayErrorDialog("Error", "The address  could not be updated");
-            } catch (NumberFormatException e) {
+            }
+
+            catch (NumberFormatException e) {
                 dialogCreator.displayErrorDialog("Input not valid", "address was not updated");
             }
         }
