@@ -1,6 +1,6 @@
 package Controllers;
 
-import database.BookDatabaseHandler;
+import database.Book_OrderDatabaseHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -22,11 +22,22 @@ import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import static database.Book_OrderDatabaseHandler.getAddressFromUsername;
+
 public class UserMainScreenController {
 
+    private ShoppingCartController shoppingCartController;
+    private OrderDetailController OrderDetailController;
+    private AddressUpdateController AddressUpdateController;
+
+
+    @FXML public MenuItem changePasswordMenuItem, editAddressMenuItem, logoutMenuItem;
+
+    @FXML private TextField username;
+
     @FXML private TextField searchBar;
-    @FXML public MenuButton menuButton, menuDropdownButton;
-    @FXML private Button searchButton, logoutButtonPressed, SearhButton;
+    @FXML public MenuButton menuButton;
+    @FXML private Button usernameButton;
     @FXML private ComboBox filterTypeComBoBox, menuComboBox;
 
     @FXML private TableView<Book> tableView;
@@ -42,33 +53,46 @@ public class UserMainScreenController {
         setupTableView();
     }
 
-    public void logout(ActionEvent actionEvent) {
-        sceneChange.sceneChangeButton("fxml/loginScreenUI.fxml", logoutButtonPressed, 1200, 800);
-    }
-
     private void openShoppingCart(Book book){
+
+        Stage stage = (Stage) usernameButton.getScene().getWindow();
+        stage.close();
+
         try {
             // Load an instance of the menu bar and assign it to menubar
             FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/ShoppingCartUI.fxml"));
             Parent parent = loader.load();
 
-            Scene newScene = new Scene(parent, 1000, 1000);
+            Scene newScene = new Scene(parent, 1000, 800);
             Stage newStage = new Stage();
 
             newStage.setScene(newScene);
             newStage.show();
 
-            ShoppingCartController shoppingCartController = loader.getController();
+            shoppingCartController = loader.getController();
             shoppingCartController.setBook(book);
+            shoppingCartController.setName(getName());
 
         } catch (IOException ioEx) {
             ioEx.printStackTrace();
         }
     }
 
+    String getName() {
+        return username.getText();
+    }
+
+    String getAddress() throws SQLException {
+        return getAddressFromUsername(username.getText());
+    }
+
+    void setName(String name) {
+        username.setText(name);
+    }
+
     private void setupTableView() throws SQLException {
 
-        ResultSet resultSet = BookDatabaseHandler.getBooks();
+        ResultSet resultSet = Book_OrderDatabaseHandler.getBooks();
         ObservableList<Book> book = FXCollections.observableArrayList();
 
         while(resultSet.next()){
@@ -93,7 +117,7 @@ public class UserMainScreenController {
         quantityColumn.setCellValueFactory(new PropertyValueFactory<>("quantity"));
 
         titleColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.15));
-        authorColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.1));
+        authorColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.15));
         descriptionColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.6));
         priceColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.05));
         quantityColumn.prefWidthProperty().bind(tableView.widthProperty().multiply(0.05));
@@ -172,7 +196,7 @@ public class UserMainScreenController {
             return cell ;
         });
 
-        tableView.getColumns().addAll(titleColumn, authorColumn, descriptionColumn, priceColumn, actionColumn);
+        tableView.getColumns().addAll(titleColumn, authorColumn, descriptionColumn, actionColumn);
         tableView.setItems(book);
 
         FilteredList<Book> flBook = new FilteredList(book, p -> true);//Pass the data to a filtered list
@@ -204,14 +228,11 @@ public class UserMainScreenController {
             return false;
         }));
 
-        // 3. Wrap the FilteredList in a SortedList.
         SortedList<Book> sortedData = new SortedList<>(flBook);
-        // 4. Bind the SortedList comparator to the TableView comparator.
         sortedData.comparatorProperty().bind(tableView.comparatorProperty());
-        // 5. Add sorted (and filtered) data to the table.
         tableView.setItems(sortedData);
 
-        filterTypeComBoBox.setButtonCell(new ListCell(){
+        filterTypeComBoBox.setButtonCell(new ListCell() {
 
             @Override
             protected void updateItem(Object item, boolean empty) {
@@ -219,7 +240,6 @@ public class UserMainScreenController {
                 if(empty || item==null){
                     setStyle("-fx-font-size:15");
                     setStyle("-fx-font-family: 'Segoe UI Bold'");
-                    setStyle("-fx-alignment: 'center'");
                 } else {
                     setStyle("-fx-font-size:15");
                     setText(item.toString());
@@ -227,9 +247,39 @@ public class UserMainScreenController {
             }
 
         });
-
     }
 
-    public void logoutButtonPressed(ActionEvent actionEvent) {
+    public void changePasswordMenuItem(ActionEvent actionEvent) {
+        sceneChange.sceneChangeButton("fxml/ForgotPasswordUI.fxml", usernameButton, 800, 500);
+    }
+
+    public void editAddressMenuItem(ActionEvent actionEvent) throws SQLException {
+
+        try {
+            // Load an instance of the menu bar and assign it to menubar
+            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/AddressUpdateUI.fxml"));
+            Parent parent = loader.load();
+
+            Scene newScene = new Scene(parent, 1000, 600);
+            Stage newStage = new Stage();
+
+            newStage.setScene(newScene);
+            newStage.show();
+
+            AddressUpdateController = loader.getController();
+
+            if (getAddress().equals(null) || getAddress().isEmpty()) AddressUpdateController.setAddress("NO ADDRESS IN THE SYSTEM YET");
+            else AddressUpdateController.setAddress("CURRENT ADDRESS: " + getAddress());
+
+            if (getName().equals(null) || getName().isEmpty()) AddressUpdateController.setAddress("SOMETHING WENT WRONG");
+            else AddressUpdateController.setUsername(getName());
+
+        } catch (IOException ioEx) {
+            ioEx.printStackTrace();
+        }
+    }
+
+    public void logoutMenuItem(ActionEvent actionEvent) {
+        sceneChange.sceneChangeButton("fxml/loginScreenUI.fxml", usernameButton, 800, 500);
     }
 }

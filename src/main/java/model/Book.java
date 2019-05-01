@@ -44,6 +44,9 @@ public class Book {
                 this.author = author;
         }
 
+        public Book(int orderID) {
+        }
+
         public static boolean isAvailability() {
                 return availability;
         }

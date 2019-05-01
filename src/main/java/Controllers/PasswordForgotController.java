@@ -10,6 +10,8 @@ import util.sceneChange;
 
 import java.sql.*;
 
+import static database.UserDatabaseHandler.addToken;
+import static database.UserDatabaseHandler.verifyUsernameAndEmail;
 import static util.JavaMail.getToken;
 import static util.JavaMail.sendMail;
 import static util.emailValidator.emailValidator;
@@ -31,13 +33,13 @@ public class PasswordForgotController {
         Connection conn = DatabaseConnector.getConnection();
         Statement stmt = null;
 
-
         try {
             if (conn.isClosed() || conn == null) {
                 System.out.println("Connection Failed");
-            } else if (conn != null || !conn.isClosed()) {
+            }
+
+            else if (conn != null || !conn.isClosed()) {
                 System.out.println("Connection was Successful");
-                stmt = conn.createStatement();
             }
 
             String username1 = uName.getText();
@@ -55,41 +57,30 @@ public class PasswordForgotController {
 
                 System.out.println("Printing : " + username1 + " " + emailEntered1);
 
-                //language=MySQL
-                String query1 = "SELECT * FROM user WHERE username is not null AND email is not null";
-                ResultSet result1 = stmt.executeQuery(query1);
-
                 if (!emailEntered1.equals(emailEntered2)) {
                     Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                     errorAlert.setHeaderText("Input not valid");
                     errorAlert.setContentText("Email address is not a match. Please try again. ");
                     errorAlert.showAndWait();
-                } else {
-                    String query2 = "SELECT username AND email FROM user " +
-                            "WHERE username = '" + username1 + "' AND email = '" + emailEntered1 + "'";
-                    ResultSet results3 = stmt.executeQuery(query2);
+                }
 
-                    if (!results3.first()) {
+                else {
+
+                    ResultSet results3 = verifyUsernameAndEmail(username1, emailEntered1);
+
+                    if (!results3.next()) {
                         Alert errorAlert = new Alert(Alert.AlertType.ERROR);
                         errorAlert.setHeaderText("Input not valid");
                         errorAlert.setContentText("Wrong Credentials. Please try again. ");
                         errorAlert.showAndWait();
-                    } else try {
+                    }
+
+                    else try {
 
                         String uuid = getToken();
-                        // uuid.toString();
-
                         System.out.println("token: " + uuid);
 
-                        // create the java mysql update preparedStatement
-                        String query = "UPDATE user SET token = ? where username = ?";
-                        PreparedStatement pstmt = conn.prepareStatement(query);
-
-                        pstmt.setString(1, uuid);
-                        pstmt.setString(2, username1);
-                        // pstmt.setString(1, uuid.toString());
-
-                        if (!pstmt.execute()) {
+                        if (!addToken(uuid, username1)) {
                             System.out.println("The token was added in the database. ");
 
 

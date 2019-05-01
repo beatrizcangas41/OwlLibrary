@@ -28,6 +28,61 @@ public class UserDatabaseHandler {
         return user;
     }
 
+    static User getUserByUsernameWithAddress(String username) throws SQLException{
+        String query1 = "SELECT * FROM user WHERE username = '" + username + "'";
+
+        PreparedStatement pstmt = connection.prepareStatement(query1);
+        ResultSet results = pstmt.executeQuery(query1);
+
+        User user = null;
+        while (results.next()){
+            String name = results.getString("name");
+            String email = results.getString("email");
+            String user_type = results.getString("user_type");
+            String password = results.getString("password");
+            String address = results.getString("address");
+            user = new User(name, username, email, password, address);
+        }
+
+        return user;
+    }
+
+    public static String getUserTypeFromUsername(String username) throws SQLException {
+        String query1 = "SELECT user_type FROM user WHERE username = '" + username + "'";
+        PreparedStatement pstmt = connection.prepareStatement(query1);
+        ResultSet results1 = pstmt.executeQuery(query1);
+
+        String usertype = null;
+
+        while (results1.next()) {
+            usertype = results1.getString("user_type");
+        }
+
+        System.out.println("user_type: " + usertype);
+
+        if (usertype.equals("Admin")) System.out.println("Admin Page");
+        else if (usertype.equals("User")) System.out.println("User Page");
+        else System.out.println("User not classified");
+
+        return usertype;
+    }
+
+    public static String getAddressFromUsername(String username) throws SQLException {
+        String query1 = "SELECT address FROM user WHERE username = '" + username + "'";
+        PreparedStatement pstmt = connection.prepareStatement(query1);
+        ResultSet results1 = pstmt.executeQuery(query1);
+
+        String address = null;
+
+        while (results1.next()) {
+            address = results1.getString("address");
+        }
+
+        System.out.println("address: " + address);
+
+        return address;
+    }
+
     public static void addUser(String name, String email, String username, String password) throws SQLException {
 
         Statement s = connection.createStatement();
@@ -35,6 +90,26 @@ public class UserDatabaseHandler {
 
         s.executeUpdate("INSERT INTO `user`(name, email, username, password)" +
                 " VALUE ('" + name + "' , '" + email + "', '" + username + "', '" + password + "')");
+    }
+
+    public static void addUserAdmin(String name, String email, String username, String password, String user_type) throws SQLException {
+
+        Statement s = connection.createStatement();
+        password = BCrypt.hashpw(password, BCrypt.gensalt());
+
+        s.executeUpdate("INSERT INTO `user`(name, email, username, password, user_type)" +
+                " VALUE ('" + name + "' , '" + email + "', '" + username + "', '" + password + "', '"+ user_type +"')");
+    }
+
+    public static boolean addToken(String token, String username) throws SQLException {
+
+        String query = "UPDATE user SET token = ? where username = ?";
+        PreparedStatement pstmt = connection.prepareStatement(query);
+
+        pstmt.setString(1, token);
+        pstmt.setString(2, username);
+
+        return pstmt.execute();
     }
 
     public static boolean userExists (String username) throws SQLException {
@@ -116,26 +191,6 @@ public class UserDatabaseHandler {
         return email.equals(emailFromDatabase);
     }
 
-    public static String getUserTypeFromUsername(String username) throws SQLException {
-        String query1 = "SELECT user_type FROM user WHERE username = '" + username + "'";
-        PreparedStatement pstmt = connection.prepareStatement(query1);
-        ResultSet results1 = pstmt.executeQuery(query1);
-
-        String usertype = null;
-
-        while (results1.next()) {
-            usertype = results1.getString("user_type");
-        }
-
-        System.out.println("user_type: " + usertype);
-
-        if (usertype.equals("Admin")) System.out.println("Admin Page");
-        else if (usertype.equals("User")) System.out.println("User Page");
-        else System.out.println("User not classified");
-
-        return usertype;
-    }
-
     public static boolean verifyToken (String token) throws SQLException {
         String query1 = "SELECT * FROM user WHERE token = '" + token + "'";
         PreparedStatement pstmt = connection.prepareStatement(query1);
@@ -158,5 +213,15 @@ public class UserDatabaseHandler {
             System.out.println("wrong input");
             return false;
         }
+    }
+
+    public static ResultSet verifyUsernameAndEmail (String username, String email) throws SQLException {
+
+        String query2 = "SELECT username AND email FROM user " +
+                "WHERE username = '" + username + "' AND email = '" + email + "'";
+
+        PreparedStatement pstmt = connection.prepareStatement(query2);
+
+        return pstmt.executeQuery(query2);
     }
 }

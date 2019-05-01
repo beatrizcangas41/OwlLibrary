@@ -90,6 +90,7 @@ public class RegisterPageController {
                             }
 
                             else {
+
                                 addUser(name1, email1, uName1, pwrd1);
 
                                 sceneChange.sceneChangeButton("fxml/loginScreenUI.fxml", createAccountPressed, 800, 500);

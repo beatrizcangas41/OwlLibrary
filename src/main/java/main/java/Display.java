@@ -6,8 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import model.Book;
-import model.Cart;
 import model.Library;
+import model.User;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,26 +15,18 @@ import java.util.ArrayList;
 public class Display extends Application {
 
     private ArrayList<Book> books = new ArrayList<>();
+    private ArrayList<User> users = new ArrayList<>();
     public ArrayList<Library> lib = new ArrayList<>();
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws IOException {
+        Parent page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/loginScreenUI.fxml"));
+        Scene scene = new Scene(page, 800, 500);
+        Stage stage = new Stage();
+        stage.setTitle("Owl Library");
 
-        try {
-            Object page = FXMLLoader.load(getClass().getClassLoader().getResource("fxml/loginScreenUI.fxml"));
-            Scene scene = new Scene((Parent) page, 800, 400);
-            primaryStage.setTitle("Owl Library");
-
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public Display() {
-        int show = 0;
-
+        stage.setScene(scene);
+        stage.show();
     }
 
     public void addBookToList(Book book) {
@@ -59,20 +51,8 @@ public class Display extends Application {
                     Book.availability = false;
                 }
             }
-            /*
-            else if (book.getSeries().contains(rent)) {
-                System.out.println("Series: " + book.getSeries() + "\t\t\tSeries from String: " + rent);
-                System.out.println("\n" + book.toString());
-                if (book.getQuantity() != 0) {
-                    book.setQuantity(1);
-                } else {
-                    book.availability = false;
-                }
-            }*/
 
-            else {
-                System.out.println();
-            }
+            else System.out.println();
         }
     }
 
@@ -89,17 +69,8 @@ public class Display extends Application {
                 System.out.println("\n" + book.toString());
             }
 
-            /*
-            else if (book.getSeries().contains(title)) {
-                System.out.println("Series: " + book.getSeries() + "\t\t\tSeries from String: " + title);
-                System.out.println("\n" + book.toString());
-            }*/
-
-            else {
-                System.out.println("Action not completed...");
-            }
+            else System.out.println("Action not completed...");
         }
-
     }
 
     public void displayListOfBooks() {
@@ -117,11 +88,6 @@ public class Display extends Application {
             System.out.println(libraries.toString());
         }
     }
-
-    public void displayBooksInCart(Cart cart) {
-        cart.toString();
-    }
-
 
     public static void main(String[] args) {
         launch(args);
