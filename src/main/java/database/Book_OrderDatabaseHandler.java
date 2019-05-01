@@ -56,7 +56,7 @@ public class Book_OrderDatabaseHandler {
 
     public static String getAddressFromUsername (String username) throws SQLException {
 
-        String query = "SELECT address FROM user where username = '" + username + "'";
+        String query = "SELECT * FROM user where username = '" + username + "'";
         PreparedStatement pstmt = connection.prepareStatement(query);
         ResultSet results = pstmt.executeQuery(query);
 
@@ -70,20 +70,49 @@ public class Book_OrderDatabaseHandler {
 
     }
 
-    public static ResultSet checkAddress(String username, String dbAddress) throws SQLException {
+    public static String getAddressInOrderTable (String username) throws SQLException {
+
+        String query = "SELECT address FROM order_info where username = '" + username + "'";
+        PreparedStatement pstmt = connection.prepareStatement(query);
+        ResultSet results = pstmt.executeQuery(query);
+
+        String address = null;
+
+        while (results.next()) {
+            address = results.getString("shipping_address");
+        }
+
+        return address;
+
+    }
+
+    public static ResultSet checkAddressInUserTable(String username) throws SQLException {
         String query1 = "SELECT * FROM user WHERE username = '" + username + "'";
         PreparedStatement pstmt = connection.prepareStatement(query1);
         ResultSet results = pstmt.executeQuery(query1);
 
         while (results.next()) {
-            dbAddress = results.getString("address");
+            String dbAddress = results.getString("address");
             System.out.println("db address: " + dbAddress);
         }
 
         return results;
     }
 
-    public static boolean updateAddress(String address, String username) throws SQLException {
+    public static ResultSet checkAddressInOrderTable(String username) throws SQLException {
+        String query1 = "SELECT * FROM `order_info` WHERE username = '" + username + "'";
+        PreparedStatement pstmt = connection.prepareStatement(query1);
+        ResultSet results = pstmt.executeQuery(query1);
+
+        while (results.next()) {
+            String dbAddress = results.getString("shipping_address");
+            System.out.println("db address: " + dbAddress);
+        }
+
+        return results;
+    }
+
+    public static void updateAddress(String address, String username) throws SQLException {
 
         String query = "UPDATE user SET address = ? where username = ?";
         PreparedStatement pstmt1 = connection.prepareStatement(query);
@@ -91,7 +120,7 @@ public class Book_OrderDatabaseHandler {
         pstmt1.setString(1, address);
         pstmt1.setString(2, username);
 
-        return pstmt1.execute();
+        pstmt1.execute();
     }
 
     public static void addOrder(String title, String bookID, String username, String shipping_address) throws SQLException {

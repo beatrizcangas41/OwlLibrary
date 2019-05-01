@@ -43,11 +43,12 @@ public class ShoppingCartController {
 
     private static ArrayList<Book> books;
     private UserMainScreenController userMainScreenController;
+    private AddressUpdateController AddressUpdateController;
 
     private String address;
 
     void setBook(Book book){
-        this.books.add(book);
+        books.add(book);
 
         shoppingCartTableView.setItems(FXCollections.observableArrayList(books));
     }
@@ -131,7 +132,7 @@ public class ShoppingCartController {
         sceneChangeButton("fxml/loginScreenUI.fxml", logoutButtonPressed, 800, 500);
     }
 
-    public void submitOrder(ActionEvent actionEvent) throws SQLException, IOException {
+    public void submitOrder(ActionEvent actionEvent) throws SQLException {
         Connection connection = DatabaseConnector.getConnection();
         Statement stmt2 = null;
 
@@ -152,13 +153,30 @@ public class ShoppingCartController {
                 dialogCreator.displayErrorDialog("no username", message);
             } else {
 
-                ResultSet result1 = checkAddress(uName, address);
+                ResultSet result1 = checkAddressInUserTable(uName);
 
                 if (result1.wasNull()) {
                     System.out.println("User must enter address");
                     displayErrorDialog("Input not valid", "There is no address in the system. Please update.");
 
-                    sceneChange.sceneChangeButton("fxml/AddressUpdateUI.fxml", cancel, 800, 500);
+                    try {
+                        // Load an instance of the menu bar and assign it to menubar
+                        FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/AddressUpdateUI.fxml"));
+                        Parent parent = loader.load();
+
+                        Scene newScene = new Scene(parent, 800, 500);
+                        Stage newStage = new Stage();
+
+                        newStage.setScene(newScene);
+                        newStage.show();
+
+                        AddressUpdateController = loader.getController();
+                        AddressUpdateController.setAddress(address);
+                        AddressUpdateController.setUsername(getName());
+
+                    } catch (IOException ioEx) {
+                        ioEx.printStackTrace();
+                    }
 
                 } else {
                     String message = "Please confirm Address";
@@ -177,14 +195,25 @@ public class ShoppingCartController {
 
                     if (result.isPresent()) {
                         if (result.get() == buttonTypeMODIFY) {
-                            FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/AddressUpdateUI.fxml"));
-                            Parent parent = loader.load();
 
-                            Scene newScene = new Scene(parent, 800, 500);
-                            Stage newStage = new Stage();
+                            try {
+                                FXMLLoader loader = new FXMLLoader(getClass().getClassLoader().getResource("fxml/AddressUpdateUI.fxml"));
+                                Parent parent = loader.load();
 
-                            newStage.setScene(newScene);
-                            newStage.show();
+                                Scene newScene = new Scene(parent, 800, 500);
+                                Stage newStage = new Stage();
+
+                                newStage.setScene(newScene);
+                                newStage.show();
+
+                                AddressUpdateController = loader.getController();
+                                AddressUpdateController.setAddress(address);
+                                AddressUpdateController.setUsername(getName());
+
+                            } catch (IOException ioEx) {
+                                ioEx.printStackTrace();
+                            }
+
                         }
 
                         else if (result.get() == buttonTypeCONFIRM) {
@@ -205,7 +234,7 @@ public class ShoppingCartController {
                             System.out.println("title " + title);
 
                             try {
-                                sceneChange.sceneChangeButton("fxml/UserMainScreenUI.fxml", cancel, 1200, 800);
+                                sceneChange.sceneChangeButton("fxml/loginScreenUI.fxml", cancel, 800, 500);
 
                             } catch (Exception e) {
                                 e.printStackTrace();

@@ -12,15 +12,18 @@ import util.sceneChange;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import static database.Book_OrderDatabaseHandler.updateAddress;
+import static database.Book_OrderDatabaseHandler.*;
+import static util.dialogCreator.displayErrorDialog;
 import static util.dialogCreator.displayInformationDialog;
 
 public class AddressUpdateController {
     @FXML public Button submitAddress, cancelButton;
     @FXML public TextField current, new1, new2, username;
-    public Button usernameButton;
+    @FXML public Button usernameButton;
 
-    void setUsername(String name) {
+    private String address;
+
+     void setUsername(String name) {
         username.setText(name);
     }
 
@@ -39,17 +42,24 @@ public class AddressUpdateController {
         String address1 = new1.getText();
         String address2 = new2.getText();
 
+        String uName = username.getText();
 
         if (address1.equals(address2)) {
-            boolean address = updateAddress(address1, username.getText());
 
-            if (!address) {
+            try {
 
-                System.out.println("address updated");
-                displayInformationDialog("Confirmation", "your address is been updated. ");
+                updateAddress(address1, uName);
+                address = getAddressFromUsername(uName);
 
-                Stage stage = (Stage) submitAddress.getScene().getWindow();
-                stage.close();
+                if (!address.equals(null)) {
+                    System.out.println("address updated");
+                    displayInformationDialog("Confirmation", "your address is been updated. ");
+
+                    Stage stage = (Stage) submitAddress.getScene().getWindow();
+                    stage.close();
+                } else displayErrorDialog("Error", "The address  could not be updated");
+            } catch (NumberFormatException e) {
+                dialogCreator.displayErrorDialog("Input not valid", "address was not updated");
             }
         }
 
@@ -58,8 +68,6 @@ public class AddressUpdateController {
             String message = "The address could not be updated. ";
             dialogCreator.displayErrorDialog("Error while updating address", message);
         }
-
-
     }
 
     public void cancelButton(ActionEvent actionEvent) {

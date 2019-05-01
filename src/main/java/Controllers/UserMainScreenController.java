@@ -267,12 +267,8 @@ public class UserMainScreenController {
             newStage.show();
 
             AddressUpdateController = loader.getController();
-
-            if (getAddress().equals(null) || getAddress().isEmpty()) AddressUpdateController.setAddress("NO ADDRESS IN THE SYSTEM YET");
-            else AddressUpdateController.setAddress("CURRENT ADDRESS: " + getAddress());
-
-            if (getName().equals(null) || getName().isEmpty()) AddressUpdateController.setAddress("SOMETHING WENT WRONG");
-            else AddressUpdateController.setUsername(getName());
+            AddressUpdateController.setAddress("CURRENT ADDRESS: " + getAddress());
+            AddressUpdateController.setUsername(getName());
 
         } catch (IOException ioEx) {
             ioEx.printStackTrace();
